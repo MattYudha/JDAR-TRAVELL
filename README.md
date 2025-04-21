@@ -1,18 +1,6 @@
 <p align="center">
   <table>
     <tr>
-      <td align="center">
-        <img src="screenshots/01.png" width="300" alt="Beranda JDAR Travel">
-        <br>Dashboard Admin
-      </td>
-      <td align="center">
-        <img src="screenshots/02.png" width="300" alt="Daftar Paket">
-        <br>Login Page
-      </td>
-      <td align="center">
-        <img src="screenshots/03.png" width="300" alt="Form Pemesanan">
-        <br>Riwayat Pembelian
-      </td>
     </tr>
       <th colspan="3"><h3>Antarmuka Pengguna</h3></th>
     </tr>
