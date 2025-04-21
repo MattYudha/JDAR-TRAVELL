@@ -1,195 +1,179 @@
-JDAR Travel
-JDAR Travel adalah sebuah aplikasi web full-stack berbasis PHP murni yang dirancang untuk mengelola berbagai paket wisata dan perjalanan. Aplikasi ini memungkinkan pengguna untuk menjelajah, mencari, dan membeli paket wisata, serta menghasilkan laporan PDF, memberikan ulasan, dan mengelola pemesanan secara real-time. Administrator memiliki kontrol penuh atas manajemen pengguna, paket, dan laporan penjualan.
+# JDAR Travel
 
-Aplikasi ini terintegrasi dengan Midtrans untuk proses pembayaran yang aman dan efisien.
+JDAR Travel is a full-stack travel and tour booking website built with raw PHP. It allows users to explore, purchase, and manage travel packages, while providing administrators with tools to oversee users, bookings, and generate insightful reports. The platform integrates with Midtrans for secure payment processing and offers real-time updates and email notifications.
 
-✨ Fitur Utama
-🔹 Untuk Pengguna
-Validasi Pengguna: Validasi saat login dan pendaftaran, memastikan username dan email unik. Email konfirmasi dikirim setelah registrasi.
+---
 
-Validasi Pembelian: Pengguna tidak dapat membeli paket yang sama lebih dari sekali, paket yang telah dimulai, atau jika kuota penuh.
+## ✨ Key Features
 
-Notifikasi Email: Email otomatis dikirim setelah transaksi berhasil.
+### 👤 Users
+- **User Validation:** Unique username and email validation during registration. Confirmation email is sent post-registration *(see `api/register.php`, `services/phpmailer/` - uncomment PHPMailer code)*.
+- **Purchase Restrictions:** Prevents double-booking, booking full packages, or booking after the package has started *(see `order_form.php`, `packageAvailability.php`).*
+- **Email Notifications:** Automated email sent after purchase confirmation *(see `success.php`).*
+- **Reviews & Reports:** Users can review purchased packages and generate PDF receipts *(see `user_review.php`, `sales_pdf.php`).*
+- **Search & Browse:** Quick access to packages via search or full listings *(see `searchPackages.php`, `package.php`).*
+- **Real-Time Ratings:** Package ratings update immediately after user reviews *(see `countStars.php`).*
 
-Ulasan & Laporan: Pengguna dapat memberikan ulasan dan mengunduh laporan PDF setelah pembelian.
+### 🚀 Admin
+- **Package Management:** Create, view, and modify tour packages *(see `new_package.php`, `packageAvailability.php`).*
+- **User Management:** Activate or deactivate users *(see `user_update.php`).*
+- **Sales & Reports:** View sales data and export reports as PDFs *(see `admin_dashboard.php`, `generatePDF.php`).*
+- **Central Dashboard:** A streamlined interface to manage the platform *(see `admin_dashboard.php`).*
 
-Pencarian & Eksplorasi: Cari dan jelajahi semua paket dari halaman utama.
+---
 
-Rating Real-Time: Penilaian paket diperbarui secara langsung berdasarkan ulasan pengguna.
+## 📃 Project Structure
+```
+api/            # API endpoints (login, registration)
+app/            # Core application and DB logic
+assets/         # Static files (CSS, JS, images)
+auth/           # Authentication modules
+components/     # UI components (header, footer, etc)
+services/       # Payment and backend utilities
+utilities/      # Helpers (e.g., star rating logic)
+logs/           # Midtrans and auth logs
+```
 
-🔸 Untuk Admin
-Manajemen Paket: Tambah, lihat, dan ubah paket wisata.
+### Other Notable Files
+- `index.php`: Main entry point
+- `success.php`: Post-payment success page
+- `composer.json`: Composer dependencies
+- `tailwind.css`: Frontend styling
 
-Manajemen Pengguna: Aktifkan/nonaktifkan akun pengguna.
+---
 
-Laporan & Penjualan: Lihat data penjualan dan cetak laporan PDF.
+## 🚀 Prerequisites
+- PHP 7.4 or higher
+- MySQL database
+- Composer (for PHP dependencies)
+- Midtrans Sandbox account
+- Web server with PHP support (e.g., Apache, Nginx)
+- Code editor (e.g., VSCode, PhpStorm)
 
-Dashboard Admin: Panel kontrol terpusat untuk mengelola situs.
+**Recommended Stack:** Use [XAMPP](https://www.apachefriends.org/) or [Laragon](https://laragon.org/) for local development.
 
-🐞 Bug yang Diketahui
-Beberapa bug mungkin terdapat di file app/dbConnection.php, terutama terkait koneksi dan query database.
+---
 
-├── api/               # Endpoint API (login & register)
-├── app/               # File inti aplikasi (koneksi DB, SQL schema)
-├── assets/            # Asset statis (CSS, JS, gambar, logo)
-├── auth/              # Komponen terkait autentikasi
-├── components/        # Komponen UI yang dapat digunakan kembali
-├── services/          # Layanan backend (transaksi, checkout, dsb.)
-├── utilities/         # Utilitas seperti perhitungan rating
-├── logs/              # Log autentikasi dan transaksi Midtrans
-├── index.php          # Halaman utama
-├── package.php        # Logika terkait paket wisata
-├── success.php        # Halaman sukses setelah transaksi
-├── composer.json      # Konfigurasi dependency Composer
-└── tailwind.css       # Styling menggunakan Tailwind CSS
+## 📦 Installation
 
-
-📋 Prasyarat
-Sebelum memulai, pastikan Anda telah menginstal:
-
-PHP 7.4 atau lebih tinggi
-
-MySQL
-
-Composer
-
-Akun Sandbox Midtrans
-
-Web server (Apache, Nginx) dengan dukungan PHP
-
-Code editor (VSCode, PhpStorm, dsb.)
-
-Rekomendasi lokal development:
-Gunakan XAMPP atau Laragon untuk pengaturan lokal PHP & MySQL.
-
-⚙️ Instalasi
-1. Clone Repositori
+### 1. Clone the Repository
+```bash
 git clone https://github.com/rahmatyudi/jdar-travel.git
 cd jdar-travel
+```
 
+### 2. Install Dependencies
+```bash
+composer install
+```
 
-2. Instal Dependensi
-   composer install
+### 3. Set Up the Database
+- Create a database named `jdar_travel`
+- Import `app/db.sql` into MySQL
+- Configure DB credentials in `app/dbConnection.php`
 
-3. Setup Database
-Buat database baru bernama jdar_travel.
-
-Import schema dari app/db.sql.
-
-Ubah konfigurasi database di app/dbConnection.php.
-
-4. Konfigurasi Midtrans
-Buat akun Midtrans (Sandbox) di Midtrans Dashboard.
-
-Dapatkan Server Key dan Client Key.
-
-Tambahkan konfigurasi di components/navBtn.php atau file .env:
-
+### 4. Configure Midtrans
+- Sign up on [Midtrans Sandbox](https://dashboard.midtrans.com/)
+- Get Server and Client Keys
+- Update keys in `components/navBtn.php` or in a `.env` file:
+```
 MIDTRANS_SERVER_KEY=your-server-key
 MIDTRANS_CLIENT_KEY=your-client-key
 MIDTRANS_IS_PRODUCTION=false
+```
 
-
-5. Konfigurasi PHPMailer (Opsional)
-Sesuaikan file services/phpmailer/ dengan kredensial email Anda:
-
-Contoh : 
+### 5. Set Up PHPMailer (Optional)
+- Edit credentials in `services/phpmailer/`
+```php
 $mail->Username = 'your-email@gmail.com';
 $mail->Password = 'your-email-password';
+```
+- Uncomment PHPMailer code in `api/register.php` and `success.php`
 
-Aktifkan kembali baris kode PHPMailer di:
+### 6. Create `.env`
+```bash
+cp .env.example .env
+```
+Update necessary variables (e.g., DB, Midtrans keys).
 
-api/register.php
+### 7. Run the Application
+```bash
+php -S localhost:8000
+```
+Visit [http://localhost:8000](http://localhost:8000)
 
-success.php
+---
 
-6. Atur Environment
-Salin .env.example menjadi .env, lalu sesuaikan isinya.
+## 🚪 Usage
 
-Pastikan web server Anda mengarah ke folder proyek ini.
+### User Flow
+1. Register/login via `/api/register.php` or `/api/login.php`
+2. Search or browse travel packages
+3. Book and pay for a package using Midtrans
+4. Receive confirmation email and download PDF receipt
+5. Leave a review for the package
 
-7. Jalankan Aplikasi
-   php -S localhost:8000
-🚀 Alur Penggunaan
-👤 Alur Pengguna
-Daftar atau login via /api/register.php atau /api/login.php.
+### Admin Flow
+1. Login via `/api/login.php`
+2. Set `is_admin` to `1` in `users` table via DB
+3. Access `admin_dashboard.php`
+4. Manage users, packages, and view reports
 
-Telusuri atau cari paket wisata.
+---
 
-Lakukan pemesanan via /order_form.php.
+## 📷 Screenshots
+- **Landing/Search:** `index.php`, `searchPackages.php`
+- **Ratings/Reviews:** `countStars.php`, `user_review.php`
+- **Admin Panel:** `admin_dashboard.php`
+- **User Dashboard:** `user_dashboard.php`
+- **Payments:** `checkOut.php`
 
-Selesaikan pembayaran melalui Midtrans.
+---
 
-Tulis ulasan dan unduh bukti transaksi dalam PDF.
+## 💻 Built With
+- **PHP**: Backend scripting
+- **MySQL**: Database
+- **Tailwind CSS**: Frontend styling
+- **PHPMailer**: Email integration
+- **Midtrans**: Secure payment gateway
 
-🛠️ Alur Admin
-Login sebagai admin.
+---
 
-Jadikan user sebagai admin lewat database (users → is_admin = 1).
+## ⚡ Troubleshooting
 
-Kelola paket, lihat laporan penjualan, dan cetak laporan dari admin_dashboard.php.
+### Payment Issues
+- Confirm Midtrans credentials
+- Review `logs/midtrans_log`
+- Use Midtrans Dashboard to verify status
+- Test transactions with endpoints like:
+  - `POST https://api.sandbox.midtrans.com/v2/[transaction-id]/settle`
 
-🖼️ Cuplikan Layar
-Pencarian Paket: Cari dari landing page (index.php).
+### Database Issues
+- Ensure `app/dbConnection.php` has correct credentials
+- Confirm database is properly imported
 
-Daftar Paket: Lihat semua destinasi (searchPackages.php).
+### Email Issues
+- Verify credentials in `services/phpmailer/`
+- Ensure PHPMailer code is uncommented in key files
 
-Rating Real-Time: Diperbarui otomatis setelah review (countStars.php).
+---
 
-Dashboard Admin: Kontrol penuh atas aplikasi (admin_dashboard.php).
+## 📢 Contact
+- **Name:** Rahmat Yudi Burhanudin
+- **Email:** dewarahmat12334@gmail.com
 
-Gateway Pembayaran: Midtrans mendukung VA, GoPay, ShopeePay, dll (checkOut.php).
+---
 
+## 👤 Authors
+- **Rahmat Yudi Burhanudin** - [@rahmatyudi](https://github.com/rahmatyudi)
 
-🛠️ Dibangun Dengan
-PHP - Backend utama
+---
 
-MySQL - Database relasional
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Tailwind CSS - Styling frontend
+---
 
-PHPMailer - Pengiriman email
-
-Midtrans - Gateway pembayaran
-
-❓ Troubleshooting
-Masalah Pembayaran:
-Pastikan Server Key Midtrans benar.
-
-Cek file logs/midtrans_log.
-
-Verifikasi transaksi di dashboard Midtrans.
-
-Gunakan endpoint settle, approve, atau expire untuk simulasi status.
-
-Masalah Database:
-Pastikan kredensial di app/dbConnection.php benar.
-
-Schema SQL (db.sql) sudah diimport?
-
-Masalah Email:
-Konfigurasi SMTP di PHPMailer sudah benar?
-
-Pastikan kode tidak dikomentari di api/register.php dan success.php.
-
-📞 Kontak
-Untuk pertanyaan atau bantuan:
-
-Nama: Rahmat Yudi Burhanudin
-Email: dewarahmat12334@gmail.com
-
-👥 Kontributor
-Rahmat Yudi Burhanudin - @rahmatyudi
-
-📄 Lisensi
-Proyek ini dilisensikan di bawah lisensi MIT.
-
-🙏 Penghargaan
-Desain terinspirasi dari berbagai platform pemesanan wisata populer.
-
-
-
-
-
-
+## ✨ Acknowledgments
+- Design and features inspired by modern travel booking platforms.
 
