@@ -3,49 +3,49 @@
     <tr>
       <td align="center">
         <img src="screenshots/01.png" width="300" alt="Beranda JDAR Travel">
-        <br>Beranda JDAR Travel
+        <br>Dashboard Admin
       </td>
       <td align="center">
         <img src="screenshots/02.png" width="300" alt="Daftar Paket">
-        <br>Daftar Paket
+        <br>Login Page
       </td>
       <td align="center">
         <img src="screenshots/03.png" width="300" alt="Form Pemesanan">
-        <br>Form Pemesanan
+        <br>Riwayat Pembelian
       </td>
     </tr>
     <tr>
       <td align="center">
         <img src="screenshots/04.png" width="300" alt="Halaman Login">
-        <br>Halaman Login
+        <br>Midtrans Payment Methode
       </td>
       <td align="center">
         <img src="screenshots/05.png" width="300" alt="Dashboard Admin">
-        <br>Dashboard Admin
+        <br>Form Pemesanan
       </td>
       <td align="center">
         <img src="screenshots/06.png" width="300" alt="Tabel Pengguna">
-        <br>Tabel Pengguna
+        <br>Detail Pesanan
       </td>
     </tr>
     <tr>
       <td align="center">
         <img src="screenshots/07.png" width="300" alt="Laporan Penjualan">
-        <br>Laporan Penjualan
+        <br>Pilihan Package & Map Frame
       </td>
       <td align="center">
         <img src="screenshots/08.png" width="300" alt="Pembayaran Midtrans">
-        <br>Pembayaran Midtrans
+        <br>Paket Tour Detail
       </td>
       <td align="center">
         <img src="screenshots/09.png" width="300" alt="Form Ulasan">
-        <br>Form Ulasan
+        <br>Footer
       </td>
     </tr>
     <tr>
       <td align="center">
         <img src="screenshots/10.png" width="300" alt="Find Package">
-        <br>Find Package
+        <br>Package Availible
       </td>
       <td align="center">
         <img src="screenshots/11.png" width="300" alt="Landing Page">
