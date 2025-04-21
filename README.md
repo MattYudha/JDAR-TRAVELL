@@ -1,3 +1,18 @@
+<p align="center">
+  <img src="screenshots/01.png" width="100%" alt="Beranda JDAR Travel">
+  <img src="screenshots/02.png" width="100%" alt="Daftar Paket">
+  <img src="screenshots/03.png" width="100%" alt="Form Pemesanan">
+  <img src="screenshots/04.png" width="100%" alt="Halaman Login">
+  <img src="screenshots/05.png" width="100%" alt="Dashboard Admin">
+  <img src="screenshots/06.png" width="100%" alt="Tabel Pengguna">
+  <img src="screenshots/07.png" width="100%" alt="Laporan Penjualan">
+  <img src="screenshots/08.png" width="100%" alt="Pembayaran Midtrans">
+  <img src="screenshots/09.png" width="100%" alt="Form Ulasan">
+  <img src="screenshots/10.png" width="100%" alt="Find Packagr">
+  <img src="screenshots/11.png" width="100%" alt="Landing Page">
+</p>
+
+
 # 🌍 JDAR Travel
 
 **JDAR Travel** adalah aplikasi web full-stack ✨ yang dibangun dengan **PHP murni** untuk mengelola berbagai paket wisata dan perjalanan.  
