@@ -19,39 +19,87 @@
         <img src="screenshots/04.png" width="300" alt="Halaman Login">
         <br>Midtrans Payment Methode
       </td>
-      <td align="center">
-        <img src="screenshots/05.png" width="300" alt="Dashboard Admin">
-        <br>Form Pemesanan
+    <p align="center">
+  <table>
+    <tr>
+      <th colspan="3"><h3>Antarmuka Pengguna</h3></th>
+    </tr>
+    <tr>
+      <td align="center" width="33%">
+        <img src="screenshots/11.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Landing Page">
+        <br><strong>Landing Page</strong><br>
+        <small>Halaman pembuka yang menarik untuk memperkenalkan layanan travel.</small>
       </td>
-      <td align="center">
-        <img src="screenshots/06.png" width="300" alt="Tabel Pengguna">
-        <br>Detail Pesanan
+      <td align="center" width="33%">
+        <img src="screenshots/10.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Package Available">
+        <br><strong>Paket Tersedia</strong><br>
+        <small>Menampilkan daftar paket perjalanan yang dapat dipilih pengguna.</small>
+      </td>
+      <td align="center" width="33%">
+        <img src="screenshots/07.png" width टी="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Pilihan Package & Map Frame">
+        <br><strong>Pilihan Paket & Peta</strong><br>
+        <small>Informasi paket dengan integrasi peta untuk rute perjalanan.</small>
       </td>
     </tr>
     <tr>
-      <td align="center">
-        <img src="screenshots/07.png" width="300" alt="Laporan Penjualan">
-        <br>Pilihan Package & Map Frame
+      <th colspan="3"><h3>Fitur Transaksi</h3></th>
+    </tr>
+    <tr>
+      <td align="center" width="33%">
+        <img src="screenshots/05.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Form Pemesanan">
+        <br><strong>Form Pemesanan</strong><br>
+        <small>Formulir untuk memesan paket perjalanan dengan mudah.</small>
       </td>
-      <td align="center">
-        <img src="screenshots/08.png" width="300" alt="Pembayaran Midtrans">
-        <br>Paket Tour Detail
+      <td align="center" width="33%">
+        <img src="screenshots/06.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Detail Pesanan">
+        <br><strong>Detail Pesanan</strong><br>
+        <small>Rincian pesanan untuk konfirmasi pengguna.</small>
       </td>
-      <td align="center">
-        <img src="screenshots/09.png" width="300" alt="Form Ulasan">
-        <br>Footer
+      <td align="center" width="33%">
+        <img src="screenshots/03.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Riwayat Pembelian">
+        <br><strong>Riwayat Pembelian</strong><br>
+        <small>Daftar transaksi sebelumnya untuk referensi pengguna.</small>
       </td>
     </tr>
     <tr>
-      <td align="center">
-        <img src="screenshots/10.png" width="300" alt="Find Package">
-        <br>Package Availible
+      <th colspan="3"><h3>Pembayaran dan Ulasan</h3></th>
+    </tr>
+    <tr>
+      <td align="center" width="33%">
+        <img src="screenshots/04.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Midtrans Payment Method">
+        <br><strong>Metode Pembayaran Midtrans</strong><br>
+        <small>Integrasi pembayaran aman melalui Midtrans.</small>
       </td>
-      <td align="center">
-        <img src="screenshots/11.png" width="300" alt="Landing Page">
-        <br>Landing Page
+      <td align="center" width="33%">
+        <img src="screenshots/08.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Paket Tour Detail">
+        <br><strong>Detail Paket Tur</strong><br>
+        <small>Informasi lengkap tentang paket tur tertentu.</small>
       </td>
-      <td></td>
+      <td align="center" width="33%">
+        <img src="screenshots/09.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Footer">
+        <br><strong>Footer</strong><br>
+        <small>Bagian footer dengan informasi kontak dan tautan.</small>
+      </td>
+    </tr>
+    <tr>
+      <th colspan="3"><h3>Panel Admin</h3></th>
+    </tr>
+    <tr>
+      <td align="center" width="33%">
+        <img src="screenshots/01.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Dashboard Admin">
+        <br><strong>Dashboard Admin</strong><br>
+        <small>Tampilan utama untuk pengelolaan sistem oleh admin.</small>
+      </td>
+      <td align="center" width="33%">
+        <img src="screenshots/02.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Login Page">
+        <br><strong>Halaman Login</strong><br>
+        <small>Formulir login untuk akses admin dan pengguna.</small>
+      </td>
+      <td align="center" width="33%">
+        <img src="screenshots/07.png" width="100%" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Laporan Penjualan">
+        <br><strong>Laporan Penjualan</strong><br>
+        <small>Data penjualan untuk analisis performa bisnis.</small>
+      </td>
     </tr>
   </table>
 </p>
