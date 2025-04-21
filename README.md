@@ -14,14 +14,6 @@
         <br>Riwayat Pembelian
       </td>
     </tr>
-    <tr>
-      <td align="center">
-        <img src="screenshots/04.png" width="300" alt="Halaman Login">
-        <br>Midtrans Payment Methode
-      </td>
-    <p align="center">
-  <table>
-    <tr>
       <th colspan="3"><h3>Antarmuka Pengguna</h3></th>
     </tr>
     <tr>
