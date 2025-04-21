@@ -136,5 +136,6 @@ Silakan fork dan kirim PR jika ingin menambahkan fitur atau perbaikan.
 
 ## 👨‍💻 Developer
 
-Dibuat oleh [Rahmat Yudi Pratama](https://github.com/rahmatyudi) 💻  
+Dibuat oleh [Rahmat Yudi Burhanudin](https://github.com/rahmatyudi) 💻  
+Email     : dewarahmat12334@gmail.com
 Terima kasih telah menggunakan JDAR Travel! 🎒🌴
