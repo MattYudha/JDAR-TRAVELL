@@ -1,56 +1,66 @@
-# JDAR Travel
+# 🌍 JDAR Travel
 
-JDAR Travel adalah situs web full-stack yang dibangun dengan PHP murni untuk mengelola berbagai paket wisata dan perjalanan. Pengguna dapat menjelajah, mencari, dan membeli paket perjalanan, menghasilkan laporan PDF, menulis ulasan, dan mengelola pemesanan secara real-time. Admin dapat mengelola pengguna, paket wisata, penjualan, serta menghasilkan laporan. Aplikasi ini terintegrasi dengan Midtrans untuk pemrosesan pembayaran yang aman.
+**JDAR Travel** adalah aplikasi web full-stack ✨ yang dibangun dengan **PHP murni** untuk mengelola berbagai paket wisata dan perjalanan.  
+Pengguna dapat **menjelajah 🧭, mencari 🔍, membeli 🛒**, serta menulis ulasan dan menghasilkan laporan PDF 📄.  
+Admin dapat **mengelola pengguna 👥, paket wisata 🧳, penjualan 💰**, dan menghasilkan laporan 🗂️.  
+Terintegrasi dengan **Midtrans** untuk pemrosesan pembayaran yang **aman 🔐 dan cepat⚡**.
 
-## Fitur Utama
+---
 
-### Pengguna
-- **Validasi Pengguna**: Validasi saat login dan pendaftaran memastikan nama pengguna dan email unik. Pengguna menerima email konfirmasi setelah mendaftar (`api/register.php`, `services/phpmailer/` - hapus komentar kode PHPMailer untuk mengaktifkan email).
-- **Validasi Pembelian Paket**: Pengguna tidak dapat membeli paket yang sama dua kali, tidak dapat membeli setelah paket dimulai, dan tidak dapat membeli jika kapasitas penuh (`order_form.php`, `packageAvailability.php`).
-- **Notifikasi Email**: Pengguna menerima email setelah menyelesaikan pembelian (`success.php` - hapus komentar kode PHPMailer di `services/phpmailer/`).
-- **Ulasan dan Laporan**: Pengguna dapat menulis ulasan dan menghasilkan laporan PDF setelah membeli paket (`user_review.php`, `sales_pdf.php`).
-- **Pencarian dan Jelajah**: Cari paket langsung dari halaman utama atau jelajahi semua paket yang tersedia (`searchPackages.php`, `package.php`).
-- **Pembaruan Real-Time**: Rating paket diperbarui secara real-time setelah pengguna mengirim ulasan (`countStars.php`).
+## 🚀 Fitur Utama
 
-### Admin
-- **Manajemen Paket**: Melihat, menambah, dan mengubah paket (`new_package.php`, `packageAvailability.php`).
-- **Manajemen Pengguna**: Mengelola akun pengguna, termasuk mengaktifkan atau menonaktifkan akun (`user_update.php`).
-- **Penjualan dan Laporan**: Melihat data penjualan dan menghasilkan laporan PDF (`admin_dashboard.php`, `sales_pdf.php`, `generatePDF.php`).
-- **Dashboard Admin**: Dasbor pusat untuk mengontrol seluruh situs (`admin_dashboard.php`).
+### 👤 Pengguna
+- ✅ **Validasi Pengguna**: Pastikan username dan email unik saat login & daftar. Email konfirmasi dikirim setelah pendaftaran (`api/register.php`, `services/phpmailer/`).
+- 🛑 **Validasi Pembelian Paket**: Tidak bisa beli paket sama dua kali, atau paket yang sudah dimulai / penuh (`order_form.php`, `packageAvailability.php`).
+- 📧 **Notifikasi Email**: Email otomatis dikirim setelah pembelian sukses (`success.php`).
+- 📝 **Ulasan & Laporan**: Kirim ulasan dan unduh laporan PDF setelah pembelian (`user_review.php`, `sales_pdf.php`).
+- 🔎 **Pencarian & Jelajah**: Cari paket via beranda atau jelajahi semua paket (`searchPackages.php`, `package.php`).
+- ⭐ **Pembaruan Real-Time**: Rating paket diperbarui langsung setelah ulasan dikirim (`countStars.php`).
 
-## Bug yang Diketahui
+### 🛠️ Admin
+- 🎒 **Manajemen Paket**: Tambah, ubah, dan lihat detail paket wisata (`new_package.php`, `packageAvailability.php`).
+- 🧑‍💼 **Manajemen Pengguna**: Aktif/nonaktifkan akun pengguna (`user_update.php`).
+- 📊 **Penjualan & Laporan**: Lihat data penjualan dan hasilkan PDF (`admin_dashboard.php`, `sales_pdf.php`, `generatePDF.php`).
+- 📋 **Dashboard Admin**: Kontrol penuh aplikasi dari satu tempat (`admin_dashboard.php`).
 
-Periksa file `app/dbConnection.php` untuk bug yang berkaitan dengan koneksi atau query database.
+---
 
-## Struktur Proyek
+## 🐞 Bug yang Diketahui
 
-- `api/`: Endpoint API untuk login dan registrasi.
-- `app/`: File inti aplikasi, termasuk koneksi database.
-- `assets/`: Aset statis seperti CSS, font, JavaScript, dan gambar.
-- `auth/`: Komponen terkait autentikasi.
-- `components/`: Komponen UI yang dapat digunakan ulang seperti header, footer, dan navigasi.
-- `services/`: Layanan backend untuk checkout, manajemen transaksi, dan lainnya.
-- `utilities/`: Utilitas bantu untuk rating bintang dan fungsi lainnya.
-- `logs/`: File log untuk autentikasi dan transaksi Midtrans.
-- File lainnya:
-  - `index.php`: Titik masuk utama aplikasi.
-  - `package.php`: Logika terkait paket wisata.
-  - `success.php`: Halaman setelah pemesanan berhasil.
-  - `composer.json`: Manajemen dependensi dengan Composer.
-  - `tailwind.css`: Styling menggunakan Tailwind CSS.
+🔍 Periksa file `app/dbConnection.php` jika ada masalah koneksi atau query database.
 
-## Prasyarat
+---
 
-- PHP 7.4 atau lebih tinggi
-- Database MySQL
-- Composer
-- Akun Midtrans Sandbox
-- Web server (Apache, Nginx, dll.) dengan dukungan PHP
-- Code editor (VSCode, PhpStorm, dll.)
+## 🧱 Struktur Proyek
 
-**Disarankan:** Gunakan XAMPP atau Laragon untuk setup lokal.
+- `api/` – Endpoint API untuk login dan registrasi.
+- `app/` – File inti aplikasi, termasuk koneksi database.
+- `assets/` – Aset statis: CSS, JS, gambar.
+- `auth/` – Komponen autentikasi.
+- `components/` – Header, footer, navigasi, dll.
+- `services/` – Layanan backend seperti checkout & transaksi.
+- `utilities/` – Fungsi tambahan (ex: rating bintang).
+- `logs/` – Log autentikasi & transaksi Midtrans.
+- File penting:
+  - `index.php`, `package.php`, `success.php`
+  - `composer.json`, `tailwind.css`
 
-## Instalasi
+---
+
+## ⚙️ Prasyarat
+
+- ✅ PHP 7.4+
+- ✅ Database MySQL
+- ✅ Composer
+- ✅ Akun Midtrans Sandbox
+- ✅ Web server (Apache/Nginx) dengan dukungan PHP
+- ✅ Code editor (VSCode, PhpStorm, dll.)
+
+💡 **Tips:** Gunakan XAMPP atau Laragon untuk development lokal.
+
+---
+
+## 📦 Instalasi
 
 1. **Clone Repository:**
 ```bash
@@ -64,14 +74,12 @@ composer install
 ```
 
 3. **Setup Database:**
-- Buat database baru dengan nama `jdar_travel`.
-- Import schema dari `app/db.sql`.
-- Update konfigurasi database di `app/dbConnection.php`.
+- Buat database baru `jdar_travel`
+- Import schema dari `app/db.sql`
+- Update konfigurasi di `app/dbConnection.php`
 
 4. **Konfigurasi Midtrans:**
-- Buat akun di Midtrans Sandbox.
-- Dapatkan Server Key dan Client Key.
-- Update konfigurasi Midtrans di `components/navBtn.php` atau `env`:
+Buat file `.env` lalu tambahkan:
 ```env
 MIDTRANS_SERVER_KEY=server-key-anda
 MIDTRANS_CLIENT_KEY=client-key-anda
@@ -79,87 +87,54 @@ MIDTRANS_IS_PRODUCTION=false
 ```
 
 5. **Konfigurasi PHPMailer (Opsional):**
-- Update konfigurasi PHPMailer di `services/phpmailer/`:
+Edit di `api/register.php` & `success.php`
 ```php
 $mail->Username = 'email-anda@gmail.com';
 $mail->Password = 'password-email-anda';
 ```
-- Hapus komentar kode PHPMailer di `api/register.php` dan `success.php`.
+Pastikan SMTP aktif di email Anda.
 
-6. **Set Up Environment:**
-- Salin `.env.example` ke `.env` dan isi variabel yang diperlukan.
-- Pastikan server web mengarah ke direktori proyek.
-
-7. **Jalankan Aplikasi:**
+6. **Jalankan Aplikasi:**
 ```bash
 php -S localhost:8000
 ```
-- Akses aplikasi di [http://localhost:8000](http://localhost:8000).
+🌐 Buka di browser: [http://localhost:8000](http://localhost:8000)
 
-## Penggunaan
+---
 
-### Alur Pengguna:
-- Daftar atau login melalui `/api/register.php` atau `/api/login.php`.
-- Cari paket wisata melalui `/searchPackages.php`.
-- Pesan paket melalui `/order_form.php` dan lanjutkan ke pembayaran.
-- Selesaikan pembayaran dengan Midtrans (VA, GoPay, ShopeePay, dll.).
-- Tulis ulasan dan unduh struk PDF (`user_review.php`, `sales_pdf.php`).
+## 🧭 Panduan Penggunaan
 
-### Alur Admin:
-- Login sebagai admin melalui `/api/login.php`.
-- Jadikan pengguna sebagai admin di database (`users -> is_admin = 1`).
-- Akses dashboard admin (`admin_dashboard.php`).
-- Kelola paket, lihat laporan penjualan, dan cetak PDF (`generatePDF.php`).
+### Untuk Pengguna
+- 📥 Daftar/Login → `api/register.php`, `api/login.php`
+- 🔍 Cari & jelajahi paket → `searchPackages.php`, `package.php`
+- 🛒 Pesan paket → `order_form.php`
+- 💸 Bayar via Midtrans (VA, QRIS, dll.)
+- 📝 Tulis ulasan → `user_review.php`
+- 📄 Cetak laporan → `sales_pdf.php`
 
-## Cuplikan
+### Untuk Admin
+- 🔐 Login → `admin_login.php`
+- 🧳 Kelola Paket → `new_package.php`, `packageAvailability.php`
+- 👥 Kelola Pengguna → `user_update.php`
+- 📈 Lihat Penjualan & Laporan → `sales_pdf.php`, `generatePDF.php`
+- 🧭 Dashboard → `admin_dashboard.php`
 
-- **Pencarian Paket**: Cari langsung dari halaman utama (`index.php`).
-- **Daftar Paket**: Jelajahi semua paket (`searchPackages.php`).
-- **Rating Paket**: Diperbarui berdasarkan ulasan (`countStars.php`).
-- **Ulasan Pengguna**: Tampilkan dan tulis ulasan (`user_review.php`).
-- **Dashboard Admin**: Kontrol penuh untuk admin (`admin_dashboard.php`).
-- **Dashboard Pengguna**: Kelola info dan pemesanan (`user_dashboard.php`).
-- **Pembayaran**: Proses pembelian menggunakan Midtrans (`checkOut.php`).
+---
 
-## Dibuat Dengan
+## 📄 Lisensi
 
-- **PHP**: Bahasa backend utama.
-- **MySQL**: Sistem manajemen database relasional.
-- **Tailwind CSS**: Untuk styling frontend.
-- **PHPMailer**: Untuk notifikasi email.
-- **Midtrans**: Gateway pembayaran.
+Proyek ini open-source dan bebas digunakan untuk keperluan edukasi atau pengembangan lebih lanjut.
 
-## Troubleshooting
+---
 
-### Masalah Pembayaran:
-- Pastikan Server Key Midtrans benar.
-- Periksa log Midtrans (`logs/midtrans_log`).
-- Verifikasi status transaksi di dashboard Midtrans.
-- Gunakan endpoint uji coba seperti `/settle`, `/approve`, atau `/expire`.
+## 🙌 Kontribusi
 
-### Masalah Database:
-- Pastikan kredensial database benar di `app/dbConnection.php`.
-- Pastikan schema `db.sql` telah diimpor.
+Pull request dan feedback sangat diterima!  
+Silakan fork dan kirim PR jika ingin menambahkan fitur atau perbaikan.
 
-### Masalah Email:
-- Verifikasi konfigurasi PHPMailer.
-- Pastikan kode PHPMailer tidak dikomentari di `api/register.php` dan `success.php`.
+---
 
-## Kontak
+## 👨‍💻 Developer
 
-Untuk pertanyaan atau bantuan:
-- **Nama**: Rahmat Yudi Burhanudin
-- **Email**: dewarahmat12334@gmail.com
-
-## Penulis
-
-- Rahmat Yudi Burhanudin - [@rahmatyudi](https://github.com/rahmatyudi)
-
-## Lisensi
-
-Proyek ini dilisensikan di bawah MIT License - lihat file LICENSE untuk detailnya.
-
-## Penghargaan
-
-- Desain terinspirasi dari berbagai platform pemesanan perjalanan.
-
+Dibuat oleh [Rahmat Yudi Pratama](https://github.com/rahmatyudi) 💻  
+Terima kasih telah menggunakan JDAR Travel! 🎒🌴
