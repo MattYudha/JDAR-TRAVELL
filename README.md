@@ -74,7 +74,7 @@ composer install
 ```
 
 3. **Setup Database:**
-- Buat database baru `jdar_travel`
+- Buat database baru `triptip`
 - Import schema dari `app/db.sql`
 - Update konfigurasi di `app/dbConnection.php`
 
