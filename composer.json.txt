@@ -1,0 +1,12 @@
+{
+  "name": "matt",
+  "description": "A project using Midtrans PHP SDK",
+  "require": {
+    "midtrans/midtrans-php": "^2.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Midtrans\\": "vendor/midtrans/midtrans-php/src/"
+    }
+  }
+}

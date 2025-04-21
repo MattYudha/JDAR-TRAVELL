@@ -1,0 +1,21 @@
+{
+    "name": "jodijaya/triptrip",
+    "description": "A project using Midtrans PHP SDK for JDAR Travel website",
+    "require": {
+      "midtrans/midtrans-php": "^2.6",
+      "vlucas/phpdotenv": "^5.6",
+      "monolog/monolog": "^3.0",
+      "phpunit/phpunit": "^11.0",
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "scripts": {
+      "test": "phpunit tests",
+      "post-install-cmd": "echo 'Setting up environment...'",
+      "post-update-cmd": "echo 'Dependencies updated!'"
+    },
+    "autoload": {
+      "psr-4": {
+        "App\\": "app/"
+      }
+    }
+  }
