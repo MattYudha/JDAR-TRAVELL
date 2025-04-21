@@ -1,15 +1,59 @@
 <p align="center">
-  <img src="screenshots/01.png" width="100%" alt="Beranda JDAR Travel">
-  <img src="screenshots/02.png" width="100%" alt="Daftar Paket">
-  <img src="screenshots/03.png" width="100%" alt="Form Pemesanan">
-  <img src="screenshots/04.png" width="100%" alt="Halaman Login">
-  <img src="screenshots/05.png" width="100%" alt="Dashboard Admin">
-  <img src="screenshots/06.png" width="100%" alt="Tabel Pengguna">
-  <img src="screenshots/07.png" width="100%" alt="Laporan Penjualan">
-  <img src="screenshots/08.png" width="100%" alt="Pembayaran Midtrans">
-  <img src="screenshots/09.png" width="100%" alt="Form Ulasan">
-  <img src="screenshots/10.png" width="100%" alt="Find Packagr">
-  <img src="screenshots/11.png" width="100%" alt="Landing Page">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="screenshots/01.png" width="300" alt="Beranda JDAR Travel">
+        <br>Beranda JDAR Travel
+      </td>
+      <td align="center">
+        <img src="screenshots/02.png" width="300" alt="Daftar Paket">
+        <br>Daftar Paket
+      </td>
+      <td align="center">
+        <img src="screenshots/03.png" width="300" alt="Form Pemesanan">
+        <br>Form Pemesanan
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="screenshots/04.png" width="300" alt="Halaman Login">
+        <br>Halaman Login
+      </td>
+      <td align="center">
+        <img src="screenshots/05.png" width="300" alt="Dashboard Admin">
+        <br>Dashboard Admin
+      </td>
+      <td align="center">
+        <img src="screenshots/06.png" width="300" alt="Tabel Pengguna">
+        <br>Tabel Pengguna
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="screenshots/07.png" width="300" alt="Laporan Penjualan">
+        <br>Laporan Penjualan
+      </td>
+      <td align="center">
+        <img src="screenshots/08.png" width="300" alt="Pembayaran Midtrans">
+        <br>Pembayaran Midtrans
+      </td>
+      <td align="center">
+        <img src="screenshots/09.png" width="300" alt="Form Ulasan">
+        <br>Form Ulasan
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="screenshots/10.png" width="300" alt="Find Package">
+        <br>Find Package
+      </td>
+      <td align="center">
+        <img src="screenshots/11.png" width="300" alt="Landing Page">
+        <br>Landing Page
+      </td>
+      <td></td>
+    </tr>
+  </table>
 </p>
 
 
