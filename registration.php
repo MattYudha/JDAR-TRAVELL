@@ -51,10 +51,13 @@ if (empty($_SESSION['csrf_token'])) {
 
         .illustration-section {
             flex: 1;
-            padding: 20px;
+            padding: 2px;
+            margin: 1px;
             display: flex;
             justify-content: center;
             align-items: center;
+            border-radius: 20px;
+            box-sizing: border-box;
         }
 
         .illustration-section img {
@@ -68,14 +71,14 @@ if (empty($_SESSION['csrf_token'])) {
             flex: 1;
             background: rgba(255, 255, 255, 0.95);
             padding: 40px;
-            border-radius: 20px;
+            border-radius: 40px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.1);
             text-align: center;
             max-width: 450px;
         }
 
         .from-box h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
             color: #333;
             margin-bottom: 10px;
@@ -93,7 +96,7 @@ if (empty($_SESSION['csrf_token'])) {
 
         .input-field {
             position: relative;
-            margin-bottom: 15px;
+            margin-bottom: 17px;
         }
 
         .input-field i {
@@ -108,7 +111,7 @@ if (empty($_SESSION['csrf_token'])) {
             width: 100%;
             padding: 12px 15px 12px 40px;
             border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 20px;
             outline: none;
             font-size: 1rem;
             background: #f5f5f5;
@@ -127,7 +130,7 @@ if (empty($_SESSION['csrf_token'])) {
         .input-field .show_password {
             position: absolute;
             top: 50%;
-            right: 15px;
+            right: -160px;
             transform: translateY(-50%);
             color: #777;
             cursor: pointer;
@@ -237,7 +240,7 @@ if (empty($_SESSION['csrf_token'])) {
         }
 
         footer {
-            background-color: #fff
+            background-color: #fff;
             color: white;
             text-align: center;
             padding: 20px;
@@ -281,7 +284,7 @@ if (empty($_SESSION['csrf_token'])) {
             }
 
             .illustration-section img {
-                max-width: 300px;
+                max-width: 200px;
             }
 
             .from-box {
@@ -309,7 +312,7 @@ if (empty($_SESSION['csrf_token'])) {
 <body>
     <div class="registration-header">
         <nav id="navBar">
-        <img src="logo.png" alt="JDAR Logo" style="float: right; width: 65px; height: auto; margin-right: 20px;">
+            <img src="logo.png" alt="JDAR Logo" style="float: right; width: 65px; height: auto; margin-right: 20px;">
             <ul class="nav-links">
                 <li><a href="./index.php">Popular Places</a></li>
                 <li><a href="./listing.php">All Packages</a></li>
@@ -359,7 +362,6 @@ if (empty($_SESSION['csrf_token'])) {
     <footer>
         <?php include "./components/_footer.php" ?>
     </footer>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -491,11 +493,22 @@ if (empty($_SESSION['csrf_token'])) {
                         window.location.href = "./index.php";
                     }, 2000);
                 } else {
-                    notification.innerHTML = `<div class="alert alert-danger">${data.message || (isSignUp ? "Pendaftaran gagal!" : "Login gagal!")}</div>`;
+                    // Handle specific error messages for login
+                    if (!isSignUp) {
+                        if (data.message === "user_not_found") {
+                            notification.innerHTML = '<div class="alert alert-danger">Akun tidak ditemukan!</div>';
+                        } else if (data.message === "invalid_password") {
+                            notification.innerHTML = '<div class="alert alert-danger">Password atau Email salah!</div>';
+                        } else {
+                            notification.innerHTML = `<div class="alert alert-danger">${data.message || "Login gagal!"}</div>`;
+                        }
+                    } else {
+                        notification.innerHTML = `<div class="alert alert-danger">${data.message || "Pendaftaran gagal!"}</div>`;
+                    }
                 }
             })
             .catch(error => {
-                notification.innerHTML = '<div class="alert alert-danger">Terjadi kesalahan, coba lagi!</div>';
+                notification.innerHTML = '<div class="alert alert-danger">Pasword atau Email Salah, coba lagi!</div>';
             });
         }
     </script>

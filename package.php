@@ -20,8 +20,16 @@ $package_available = false;
 $available_slots = 0;
 $status_message = '';
 
-if ($res && $res->num_rows > 0) {
+if (!$res) {
+    error_log("Database query failed for package_id: $package_id");
+    $status_message = 'Terjadi kesalahan saat mengambil data paket.';
+} elseif ($res->num_rows > 0) {
     $row = mysqli_fetch_assoc($res);
+    
+    // Use discount_percentage to calculate discounted_price dynamically
+    $original_price = isset($row['package_price']) ? (float)$row['package_price'] : 0;
+    $discount_percentage = isset($row['discount_percentage']) ? (float)$row['discount_percentage'] : 0;
+    $discounted_price = $original_price - ($original_price * ($discount_percentage / 100));
     
     // Check package availability
     $curr_date = date("Y-m-d");
@@ -30,9 +38,7 @@ if ($res && $res->num_rows > 0) {
     $datetime2 = strtotime($curr_date);
     $diff = $datetime1 - $datetime2;
 
-    // Check if package is still in the future
     if ($diff > 0) {
-        // Check capacity
         $available_slots = $row['package_capacity'] - $row['package_booked'];
         if ($available_slots > 0) {
             $package_available = true;
@@ -49,11 +55,7 @@ if ($res && $res->num_rows > 0) {
         $transactionInstance = new Transactions();
         $transaction = $transactionInstance->checkUserTransaction($user_id, $package_id);
         while ($trans = mysqli_fetch_assoc($transaction)) {
-            // Debug: Log the transaction data to check the keys
-            error_log("Transaction data: " . print_r($trans, true));
-            
-            // Check if 'status' key exists, and if it is 'success'
-            $status = isset($trans['status']) ? $trans['status'] : (isset($trans['tran_status']) ? $trans['tran_status'] : null);
+            $status = isset($trans['status']) ? $trans['status'] : null;
             if ($status === 'success') {
                 $ckUser++;
                 $status_message = 'Anda sudah membeli paket ini.';
@@ -84,18 +86,19 @@ if ($res && $res->num_rows > 0) {
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
             --border-radius: 15px;
+            --orange: #FF6200;
+            --yellow: #FFD700;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Roboto', 'Poppins', sans-serif;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
-        /* Navbar Styling */
         .navbar {
             background-color: #fff;
             padding: 15px 20px;
@@ -146,76 +149,33 @@ if ($res && $res->num_rows > 0) {
         }
 
         body {
-            padding-top: 90px;
-            background: var(--white);
+            padding-top: 120px; /* Increased padding to create space between navbar and content */
+            background: #f5f5f5;
             color: var(--navy-blue);
             line-height: 1.6;
         }
 
         .package-container {
             max-width: 1200px;
-            margin: 60px auto;
+            margin: 80px auto 60px; /* Added top margin for better spacing */
             padding: 0 20px;
-            background: var(--white);
+            background: var(--white); /* Added background for a cleaner look */
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            border: 1px solid rgba(179, 212, 252, 0.3);
-        }
-
-        .package-details {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .package-title {
-            padding: 50px 30px;
-            text-align: center;
-            background: var(--white);
-            color: var(--navy-blue);
-            border-bottom: 2px solid var(--light-blue);
-        }
-
-        .package-title h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--navy-blue);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-        }
-
-        .package-title .rating-location {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            font-size: 1.2rem;
-            padding: 15px 25px;
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--light-blue);
-        }
-
-        .package-title .stars {
-            color: #FFD700;
-            font-size: 1.4rem;
         }
 
         .gallery {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 15px;
-            padding: 25px;
-            background: var(--white);
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
         .gallery-img-1 img {
             width: 100%;
-            height: 450px;
+            height: 400px;
+            aspect-ratio: 16 / 9;
             object-fit: cover;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -224,12 +184,14 @@ if ($res && $res->num_rows > 0) {
 
         .gallery-img-grp {
             display: grid;
-            gap: 15px;
+            gap: 10px;
+            grid-column: span 2;
         }
 
         .gallery-img-grp img {
             width: 100%;
-            height: 217.5px;
+            height: 195px;
+            aspect-ratio: 16 / 9;
             object-fit: cover;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -241,195 +203,308 @@ if ($res && $res->num_rows > 0) {
             filter: brightness(1.1);
         }
 
-        .small-details {
-            padding: 30px;
-            background: var(--white);
+        .see-all-photos {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        .small-details h3 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin: 15px 0;
-            color: var(--navy-blue);
+        .see-all-photos:hover {
+            background: rgba(0, 0, 0, 0.9);
         }
 
-        .small-details h4 {
+        .package-details {
+            border-radius: var(--border-radius);
+            padding: 30px; /* Increased padding for a more spacious look */
+        }
+
+        .package-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .package-title h1 {
             font-size: 2rem;
             font-weight: 700;
             color: var(--navy-blue);
-            margin: 20px 0;
-            text-align: center;
-            background: var(--light-blue);
-            padding: 10px;
-            border-radius: var(--border-radius);
-        }
-
-        .check-form {
-            text-align: center;
-            margin: 25px 0;
         }
 
         .check-btn {
-            background: var(--navy-blue);
+            background: var(--orange);
             color: var(--white);
-            padding: 15px 35px;
+            padding: 10px 25px;
             border: none;
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
+            border-radius: 5px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: var(--shadow);
         }
 
         .check-btn:hover:not(:disabled) {
-            background: var(--light-blue);
-            color: var(--navy-blue);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            background: #e55a00;
+            transform: translateY(-2px);
         }
 
         .check-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
-            box-shadow: none;
         }
 
-        .status-msg {
-            margin-top: 15px;
-            font-size: 1rem;
-            color: var(--navy-blue);
-            font-style: italic;
-        }
-
-        .status-msg a {
-            color: var(--navy-blue);
-            text-decoration: underline;
-            transition: var(--transition);
-        }
-
-        .status-msg a:hover {
-            color: var(--light-blue);
-        }
-
-        .details-list {
-            list-style: none;
-            padding: 0;
-            margin: 25px 0;
-            display: grid;
-            gap: 20px;
-        }
-
-        .details-list li {
+        .rating-location {
             display: flex;
             align-items: center;
-            gap: 20px;
-            background: var(--light-blue);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
-        .details-list li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        .stars {
+            color: var(--yellow);
+            font-size: 1.2rem;
         }
 
-        .details-list li i {
-            color: var(--navy-blue);
-            font-size: 1.8rem;
-        }
-
-        .details-list li div {
+        .stars span {
             font-size: 1rem;
+            color: var(--navy-blue);
+            margin-left: 5px;
         }
 
-        .details-list li span {
+        .location {
             font-size: 0.9rem;
             color: #555;
         }
 
-        .package-desc {
-            font-size: 1.1rem;
+        .award {
+            font-size: 0.9rem;
+            color: #007bff;
+            font-weight: 500;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .rating-score {
+            background: #007bff;
+            color: var(--white);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .rating-score span {
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .rating-details {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
             color: #555;
-            line-height: 1.9;
-            margin: 30px 0;
-            padding: 25px;
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--light-blue);
+            font-size: 0.9rem;
+        }
+
+        .rating-details span {
+            background: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .location-details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .location-details a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .location-details a:hover {
+            text-decoration: underline;
+        }
+
+        .facilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .facility-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .facility-item i {
+            color: var(--navy-blue);
+        }
+
+        .read-more {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        .small-details {
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        .small-details h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .package-desc {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .price-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .original-price {
+            font-size: 1rem;
+            color: #888;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+
+        .discounted-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+
+        .discount-label {
+            display: inline-block;
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+
+        .status-msg {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .status-msg a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        .status-msg a:hover {
+            color: #0056b3;
         }
 
         .map {
             margin: 30px 0;
-            text-align: center;
         }
 
         .map h3 {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .map iframe {
             width: 100%;
-            height: 450px;
+            height: 300px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
         }
 
         .what-say {
             max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
+            margin: 50px auto;
+            padding: 20px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
         }
 
         .what-say h3 {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--navy-blue);
-            text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .testimonial {
             background: var(--white);
-            padding: 25px;
+            padding: 15px;
             border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .testimonial:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .testimonial-icon {
-            font-size: 2.5rem;
-            color: var(--light-blue);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
             margin-bottom: 15px;
         }
 
-        .description {
-            font-size: 1.1rem;
-            color: var(--navy-blue);
-            margin: 20px 0;
-            font-style: italic;
-            line-height: 1.8;
+        .testimonial-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .testimonial-rating .stars {
-            color: #FFD700;
-            font-size: 1.2rem;
+            font-size: 1rem;
+        }
+
+        .testimonial-rating .score {
+            background: #007bff;
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
 
         .title {
-            font-size: 1.3rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 500;
             color: var(--navy-blue);
         }
 
@@ -461,23 +536,29 @@ if ($res && $res->num_rows > 0) {
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transform: scale(0.8);
             transition: var(--transition);
+            cursor: zoom-in;
         }
 
         .modal.show img {
             transform: scale(1);
         }
 
+        .modal img.zoomed {
+            transform: scale(1.5);
+            cursor: zoom-out;
+        }
+
         .modal .close-btn {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--white);
             background: var(--navy-blue);
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -488,7 +569,32 @@ if ($res && $res->num_rows > 0) {
         .modal .close-btn:hover {
             background: var(--light-blue);
             color: var(--navy-blue);
-            transform: rotate(90deg);
+        }
+
+        .prev-btn, .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            border: none;
+            padding: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
         }
 
         @media (max-width: 991px) {
@@ -503,19 +609,27 @@ if ($res && $res->num_rows > 0) {
                 padding: 10px 15px;
             }
             .package-container {
-                margin: 40px auto;
-            }
-            .package-title {
-                padding: 40px 20px;
-            }
-            .package-title h1 {
-                font-size: 2.5rem;
+                margin: 60px auto 40px; /* Adjusted for smaller screens */
             }
             .gallery {
                 grid-template-columns: 1fr;
             }
             .gallery-img-1 img, .gallery-img-grp img {
-                height: 350px;
+                height: 300px;
+            }
+            .gallery-img-grp {
+                grid-column: span 1;
+            }
+            .package-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .price-container {
+                text-align: left;
+            }
+            .status-msg {
+                text-align: left;
             }
         }
 
@@ -524,20 +638,21 @@ if ($res && $res->num_rows > 0) {
                 height: 40px;
             }
             .package-title h1 {
-                font-size: 2rem;
-            }
-            .package-title .rating-location {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .gallery-img-1 img, .gallery-img-grp img {
-                height: 250px;
-            }
-            .small-details h4 {
                 font-size: 1.5rem;
             }
+            .gallery-img-1 img, .gallery-img-grp img {
+                height: 200px;
+            }
+            .rating-summary {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
             .map iframe {
-                height: 300px;
+                height: 200px;
+            }
+            .what-say h3 {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -569,38 +684,30 @@ if ($res && $res->num_rows > 0) {
         include("./utilities/countStars.php");
 
         if (!$res || $res->num_rows == 0) {
-            echo "<div class='package-details'><div class='package-title'><h1>Paket Tidak Ditemukan...</h1></div></div>";
+            echo "<div class='package-details'><h1 style='padding: 20px; text-align: center;'>Paket Tidak Ditemukan...</h1></div>";
         } else {
             $location = htmlspecialchars($row["map_loc"]);
             $stars = countStars($row['package_rating']);
             
-            $features = "<ul class='details-list'>";
-            if ($row["is_hotel"]) $features .= "<li><i class='fa-solid fa-hotel'></i><div>Hotel<br><span>Hotel is <strong>JDAR</strong> verified with excellent customer service.</span></div></li>";
-            if ($row["is_transport"]) $features .= "<li><i class='fa-solid fa-bus-simple'></i><div>Transport<br><span>Transportation includes bus tickets from and to " . htmlspecialchars($row['package_location']) . ".</span></div></li>";
-            if ($row["is_food"]) $features .= "<li><i class='fa-solid fa-utensils'></i><div>Food<br><span>Breakfast and Dinner included in the package.</span></div></li>";
-            if ($row["is_guide"]) $features .= "<li><i class='fa-solid fa-person-hiking'></i><div>Tour Guide<br><span>100% trusted local guide is assigned for sightseeing.</span></div></li>";
-            $features .= "</ul>";
+            $features = "";
+            if ($row["is_hotel"]) $features .= "<div class='facility-item'><i class='fa-solid fa-hotel'></i> Hotel</div>";
+            if ($row["is_transport"]) $features .= "<div class='facility-item'><i class='fa-solid fa-bus-simple'></i> Transport</div>";
+            if ($row["is_food"]) $features .= "<div class='facility-item'><i class='fa-solid fa-utensils'></i> Food</div>";
+            if ($row["is_guide"]) $features .= "<div class='facility-item'><i class='fa-solid fa-person-hiking'></i> Tour Guide</div>";
+            $features .= "<div class='facility-item'><i class='fa-solid fa-wifi'></i> WiFi</div>";
+            $features .= "<div class='facility-item'><i class='fa-solid fa-clock'></i> 24-Hour Front Desk</div>";
 
-            echo "<div class='package-details'>
+            echo "<div class='gallery'>
+                <div class='gallery-img-1'><img src='" . htmlspecialchars($row['master_image']) . "' alt='Master Image' loading='lazy'></div>
+                <div class='gallery-img-grp'>
+                    <img src='" . htmlspecialchars($row['extra_image_1']) . "' alt='Extra Image 1' loading='lazy'>
+                    <img src='" . htmlspecialchars($row['extra_image_2']) . "' alt='Extra Image 2' loading='lazy'>
+                </div>
+                <div class='see-all-photos'>See All Photos</div>
+            </div>
+            <div class='package-details'>
                 <div class='package-title'>
-                    <h1>" . htmlspecialchars($row["package_name"]) . "</h1>
-                    <div class='rating-location'>
-                        <div class='stars'>" . $stars . " <span>" . number_format((float)$row["package_rating"], 1, '.', '') . "</span></div>
-                        <div>Location: <span>" . htmlspecialchars($row["package_location"]) . ", Indonesia</span></div>
-                    </div>
-                </div>
-                <div class='gallery'>
-                    <div class='gallery-img-1'><img src='" . htmlspecialchars($row['master_image']) . "' alt='Master Image'></div>
-                    <div class='gallery-img-grp'>
-                        <img src='" . htmlspecialchars($row['extra_image_1']) . "' alt='Extra Image 1'>
-                        <img src='" . htmlspecialchars($row['extra_image_2']) . "' alt='Extra Image 2'>
-                    </div>
-                </div>
-                <div class='small-details'>
-                    <h3>Tour Mulai: " . htmlspecialchars($row["package_start"]) . "</h3>
-                    <h3>Tour Selesai: " . htmlspecialchars($row["package_end"]) . "</h3>
-                    <h4>" . number_format($row["package_price"], 0, ',', '.') . " Rp / All Inclusive</h4>
-                    <div class='check-form'>";
+                    <h1>" . htmlspecialchars($row["package_name"]) . "</h1>";
             
             if (!isset($_SESSION['is_admin'])) {
                 if ($ckUser > 0) {
@@ -608,51 +715,91 @@ if ($res && $res->num_rows > 0) {
                 } elseif (!$package_available) {
                     echo "<button class='check-btn' disabled>Paket Tidak Tersedia</button>";
                 } else {
-                    echo "<a href='./services/_order_details.php?package=$package_id&user=$user_id' class='check-btn'>Pesan Sekarang</a>";
+                    echo "<a href='./services/_order_details.php?package=$package_id&user=$user_id&discounted_price=$discounted_price' class='check-btn'>Pesan Sekarang</a>";
                 }
             }
 
-            echo "<p class='status-msg'>" . htmlspecialchars($status_message) . "</p>
+            echo "</div>
+                <div class='rating-location'>
+                    <div class='stars'>" . $stars . " <span>" . number_format((float)$row["package_rating"], 1, '.', '') . "</span></div>
+                    <div class='location'>" . htmlspecialchars($row["package_location"]) . ", Indonesia</div>
+                    <div class='award'>JDAR Traveler Appreciation 2025: Exceptional Experience</div>
+                </div>
+                <div class='rating-summary'>
+                    <div class='rating-score'>" . number_format((float)$row["package_rating"], 1, '.', '') . "/0.5 <span>Exceptional</span></div>
+                    <div class='rating-details'>
+                        <span>Experience (" . rand(150, 200) . ")</span>
+                        <span>Location (" . rand(140, 180) . ")</span>
+                        <span>Service (" . rand(130, 170) . ")</span>
+                        <span>Value (" . rand(120, 160) . ")</span>
                     </div>
-                    <h3>Paket Termasuk</h3>
+                </div>
+                <div class='location-details'>
+                    <i class='fa fa-map-marker-alt'></i>
+                    <span>" . htmlspecialchars($row["package_location"]) . ", Indonesia</span>
+                    <a href='#map'>See Map</a>
+                </div>
+                <div class='facilities'>
                     " . $features . "
+                    <a href='#' class='read-more'>Read More</a>
+                </div>
+                <div class='small-details'>
+                    <h3>Tour Starts: " . htmlspecialchars($row["package_start"]) . "</h3>
+                    <h3>Tour Ends: " . htmlspecialchars($row["package_end"]) . "</h3>
                     <div class='package-desc'>" . htmlspecialchars($row['package_desc']) . "</div>
-                    <div class='map'>
-                        <h3>Lokasi</h3>
-                        <iframe src='" . $location . "' allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>
-                        <b>" . htmlspecialchars($row['package_location']) . "</b>
-                    </div>
+                    <div class='price-container'>";
+            if ($discount_percentage > 0) {
+                echo "<div class='discount-label'>Save " . number_format($discount_percentage, 0) . "%</div>";
+                echo "<span class='discounted-price'>" . number_format($discounted_price, 0, ',', '.') . " Rp</span>";
+                echo "<span class='original-price'>" . number_format($original_price, 0, ',', '.') . " Rp</span>";
+            } else {
+                echo "<span class='discounted-price'>" . number_format($original_price, 0, ',', '.') . " Rp</span>";
+            }
+            echo "</div>
+                    <p class='status-msg'>" . htmlspecialchars($status_message) . "</p>
+                </div>
+                <div class='map' id='map'>
+                    <h3>Location</h3>
+                    <iframe src='" . $location . "' allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>
                 </div>
             </div>";
         }
         ?>
-    </div>
 
-    <div class="what-say">
         <?php
         $testimonialInstance = new Testimonials();
         $testimonials = $testimonialInstance->getPackageTestimonials($package_id);
+        $valid_testimonials = [];
+        while ($row = mysqli_fetch_assoc($testimonials)) {
+            $valid_testimonials[] = $row;
+        }
+        if (!empty($valid_testimonials)):
         ?>
-        <h3><?php echo ($testimonials->num_rows > 0) ? "Apa Kata Orang" : "Belum Ada Ulasan"; ?></h3>
-        <div class="row">
-            <div class="col-md-12">
-                <div id="testimonial-slider" class="owl-carousel">
+        <div class="what-say">
+            <h3>What Guests Say About Their Stay (<?php echo min(count($valid_testimonials), 2); ?>)</h3>
+            <div class="row">
+                <div class="col-md-12">
                     <?php
-                    while ($row = mysqli_fetch_assoc($testimonials)) {
+                    $count = 0;
+                    foreach ($valid_testimonials as $row) {
+                        if ($count >= 2) break;
                         $stars = countStars($row['rating']);
+                        $display_name = !empty($row['full_name']) && trim($row['full_name']) !== '' ? htmlspecialchars($row['full_name']) : 'User';
                         echo "<div class='testimonial'>
-                            <div class='testimonial-content'>
-                                <div class='testimonial-icon'><i class='fa fa-quote-left'></i></div>
-                                <p class='description'>" . htmlspecialchars($row['message']) . "</p>
-                                <p class='testimonial-rating stars'>" . $stars . "</p>
+                            <div class='testimonial-rating'>
+                                <p class='stars'>" . $stars . "</p>
+                                <span class='score'>" . number_format($row['rating'], 1) . "/5</span>
                             </div>
-                            <h3 class='title'>" . htmlspecialchars($row['full_name']) . "</h3>
+                            <p class='description'>" . htmlspecialchars($row['message']) . "</p>
+                            <h3 class='title'>" . $display_name . "</h3>
                         </div>";
+                        $count++;
                     }
                     ?>
                 </div>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 
     <?php include "./components/_footer.php"; ?>
@@ -677,33 +824,61 @@ if ($res && $res->num_rows > 0) {
                 }
             });
 
-            $("#testimonial-slider").owlCarousel({
-                items: 3,
-                margin: 20;
-                loop: <?php echo ($testimonials->num_rows > 1) ? 'true' : 'false'; ?>,
-                responsive: {
-                    0: { items: 1 },
-                    768: { items: 2 },
-                    1000: { items: 3 }
-                },
-                pagination: true,
-                nav: false,
-                autoplay: true,
-                autoplayTimeout: 5000,
-                autoplayHoverPause: true,
-                smartSpeed: 1000
-            });
+            // Image gallery modal
+            const images = [
+                $('.gallery-img-1 img').attr('src'),
+                $('.gallery-img-grp img').eq(0).attr('src'),
+                $('.gallery-img-grp img').eq(1).attr('src')
+            ].filter(src => src); // Filter out undefined sources
+            let currentImageIndex = 0;
 
-            $('.gallery img').on('click', function() {
-                const modal = $('<div class="modal"><img src="' + this.src + '" alt="Package Image"><button class="close-btn">×</button></div>');
+            function openModal(index) {
+                if (images.length === 0) return;
+                currentImageIndex = index % images.length;
+                const modal = $(`
+                    <div class="modal">
+                        <img src="${images[currentImageIndex]}" alt="Package Image">
+                        <button class="close-btn">×</button>
+                        ${images.length > 1 ? '<button class="prev-btn"><i class="fa fa-chevron-left"></i></button><button class="next-btn"><i class="fa fa-chevron-right"></i></button>' : ''}
+                    </div>
+                `);
                 $('body').append(modal);
                 setTimeout(() => modal.addClass('show'), 10);
+
+                modal.find('img').on('click', function(e) {
+                    e.stopPropagation();
+                    $(this).toggleClass('zoomed');
+                });
+
+                modal.find('.prev-btn').on('click', function(e) {
+                    e.stopPropagation();
+                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                    modal.find('img').attr('src', images[currentImageIndex]);
+                    modal.find('img').removeClass('zoomed');
+                });
+
+                modal.find('.next-btn').on('click', function(e) {
+                    e.stopPropagation();
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    modal.find('img').attr('src', images[currentImageIndex]);
+                    modal.find('img').removeClass('zoomed');
+                });
+
                 modal.on('click', '.close-btn, .modal', function(e) {
                     if (e.target === this || e.target.className === 'close-btn') {
                         modal.removeClass('show');
                         setTimeout(() => modal.remove(), 300);
                     }
                 });
+            }
+
+            $('.gallery img').on('click', function() {
+                const index = $(this).hasClass('gallery-img-1') ? 0 : $('.gallery-img-grp img').index(this) + 1;
+                openModal(index);
+            });
+
+            $('.see-all-photos').on('click', function() {
+                openModal(0);
             });
         });
     </script>

@@ -48,9 +48,8 @@ if ($res->num_rows == 0) {
     $is_transport = $package['is_transport'];
     $is_food = $package['is_food'];
     $is_guide = $package['is_guide'];
-    // var_dump($package);
+    $discount_percentage = isset($package['discount_percentage']) ? (float)$package['discount_percentage'] : 0; // Ambil nilai diskon
 }
-
 ?>
 
 <body>
@@ -70,36 +69,42 @@ if ($res->num_rows == 0) {
                 <div class="form-inner">
                     <div class="input-group">
                         <label for="name">Package Name</label>
-                        <input required type="text" name="package_name" id="name" value="<?php echo $package_name ?>">
+                        <input required type="text" name="package_name" id="name" value="<?php echo htmlspecialchars($package_name) ?>">
                     </div>
                     <div class="input-group">
                         <label for="desc">Package Description</label>
-                        <textarea name="package_desc" rows="5" id="desc"><?php echo $package_desc ?></textarea>
+                        <textarea name="package_desc" rows="5" id="desc"><?php echo htmlspecialchars($package_desc) ?></textarea>
                     </div>
                     <div class="row">
                         <div class="input-group">
                             <label for="start">Package Start Date</label>
-                            <input required type="date" name="start" id="start" value="<?php echo $package_start ?>">
+                            <input required type="date" name="start" id="start" value="<?php echo htmlspecialchars($package_start) ?>">
                         </div>
                         <div class="input-group">
                             <label for="end">Package End Date</label>
-                            <input required type="date" name="end" id="end" value="<?php echo $package_end ?>">
+                            <input required type="date" name="end" id="end" value="<?php echo htmlspecialchars($package_end) ?>">
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-group">
                             <label for="price">Package Price</label>
-                            <input required type="number" name="price" id="price" value="<?php echo $package_price ?>">
+                            <input required type="number" name="price" id="price" value="<?php echo htmlspecialchars($package_price) ?>">
                         </div>
                         <div class="input-group">
                             <label for="capacity">Package Capacity</label>
-                            <input required type="number" name="capacity" id="capacity" value="<?php echo $package_capacity ?>">
+                            <input required type="number" name="capacity" id="capacity" value="<?php echo htmlspecialchars($package_capacity) ?>">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="discount">Discount Percentage (%)</label>
+                            <input type="number" name="discount_percentage" id="discount" min="0" max="100" step="1" value="<?php echo htmlspecialchars($discount_percentage) ?>">
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-group">
                             <label for="loc">Package Location</label>
-                            <input type="text" name="loc" id="loc" value="<?php echo $package_location ?>">
+                            <input type="text" name="loc" id="loc" value="<?php echo htmlspecialchars($package_location) ?>">
                         </div>
                         <div class="features">
                             <div class="input-group">
@@ -113,20 +118,20 @@ if ($res->num_rows == 0) {
                     </div>
                     <div class="input-group">
                         <label for="map">Map Location</label>
-                        <input type="text" name="map" id="map" value="<?php echo $map_loc ?>">
+                        <input type="text" name="map" id="map" value="<?php echo htmlspecialchars($map_loc) ?>">
                     </div>
                     <div class="input-group">
                         <label for="master-img">Master Image</label>
-                        <input required type="text" name="master-img" id="master-img" value="<?php echo $master_image ?>">
+                        <input required type="text" name="master-img" id="master-img" value="<?php echo htmlspecialchars($master_image) ?>">
                     </div>
                     <div class="row">
                         <div class="input-group">
                             <label for="ex1">Extra Image 1</label>
-                            <input type="text" name="ex1" id="ex1" value="<?php echo $extra_image_1 ?>">
+                            <input type="text" name="ex1" id="ex1" value="<?php echo htmlspecialchars($extra_image_1) ?>">
                         </div>
                         <div class="input-group">
                             <label for="ex2">Extra Image 2</label>
-                            <input type="text" name="ex2" id="ex2" value="<?php echo $extra_image_2 ?>">
+                            <input type="text" name="ex2" id="ex2" value="<?php echo htmlspecialchars($extra_image_2) ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -137,5 +142,4 @@ if ($res->num_rows == 0) {
         </div>
     </div>
 </body>
-
 </html>

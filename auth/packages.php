@@ -18,6 +18,54 @@ if (!isset($_SESSION['is_admin'])) {
 <!-- Package filters -->
 <?php include('./services/_packages.php') ?>
 
+<head>
+    <style>
+        .content-2 {
+            overflow: hidden; /* Prevent parent scrolling */
+        }
+
+        .packages-container {
+            overflow: hidden; /* Prevent parent scrolling */
+        }
+
+        .packages {
+            max-height: 300px; /* Reduced height to ensure scrollbar appears in visible area */
+            overflow-y: auto; /* Enable vertical scrolling */
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Space between packages */
+        }
+
+        .package {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .img-box img {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .details {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .btn a {
+            padding: 5px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
 <body>
     <div class='side-menu'>
         <ul>

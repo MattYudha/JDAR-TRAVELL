@@ -2,7 +2,8 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-include_once './app/_dbConnection.php';
+// Use require_once to ensure _dbConnection.php is included only once
+require_once './app/_dbConnection.php';
 ?>
 
 <!DOCTYPE html>
@@ -11,17 +12,44 @@ include_once './app/_dbConnection.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JDAR - Listings</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Navbar Styling */
+        :root {
+            --white: #FFFFFF;
+            --light-gray: #F5F6FA;
+            --medium-gray: #E8ECEF;
+            --dark-gray: #6B7280;
+            --primary-blue: #0284C7;
+            --secondary-blue: #3B82F6;
+            --discount-red: #F05252;
+            --rating-yellow: #FBBF24;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-radius: 12px;
+            --deal-pink: #FECDD3;
+            --deal-text: #BE123C;
+            --search-border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            background-color: var(--light-gray);
+        }
+
         .navbar {
-            background-color: #fff;
+            background-color: var(--white);
             padding: 15px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: absolute;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
             top: 0;
             width: 100%;
             z-index: 1000;
@@ -32,202 +60,83 @@ include_once './app/_dbConnection.php';
         }
 
         .navbar-brand img {
-            height: 60px;
+            height: 50px;
             transition: height 0.3s ease;
         }
 
         .navbar-nav .nav-link {
-            color: #333;
-            font-size: 1.1rem;
-            padding: 10px 20px;
+            color: var(--dark-gray);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 10px 15px;
             transition: color 0.3s ease;
         }
 
         .navbar-nav .nav-link:hover {
-            color: #007bff;
+            color: var(--secondary-blue);
         }
 
         .navbar-nav .nav-link.register-btn {
-            background-color: #007bff;
-            color: white !important;
-            border-radius: 25px;
-            padding: 10px 20px;
+            background-color: var(--secondary-blue);
+            color: var(--white) !important;
+            border-radius: 20px;
+            padding: 8px 18px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+            transition: var(--transition);
         }
 
         .navbar-nav .nav-link.register-btn:hover {
-            background-color: #0056b3;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+            background-color: #2563EB;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
         }
 
-        .navbar-nav .nav-link.register-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .navbar-nav .nav-link.register-btn:active::after {
-            width: 200px;
-            height: 200px;
-            transition: 0s;
-        }
-
-        /* Body padding untuk navbar absolute */
-        body {
-            margin: 0;
-        }
-
-        /* Pastikan main container tidak tertutup */
         main.container {
             margin-top: 20px;
+            padding-bottom: 40px;
         }
 
-        /* Hero Section */
-        .hero {
-            background: url('assets/bg.png') no-repeat center center/cover;
-            height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            position: relative;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            padding: 20px;
-            max-width: 900px;
-        }
-
-        .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-            margin: 0;
-            line-height: 1.2;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .hero p {
-            font-size: 1.4rem;
-            font-weight: 300;
-            margin-top: 20px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 1s ease-out 0.3s;
-            animation-fill-mode: both;
-        }
-
-        /* Modal style */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            max-width: 80%;
-            max-height: 80%;
-            border-radius: 15px;
-            box-shadow: 0 0 20px #000;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .close-btn:hover {
-            color: #ff4444;
-        }
-
-        /* Header Section */
         .header-section {
-            background-color: #f8f9fa;
-            padding: 100px 20px 20px 20px;
+            background-color: var(--white);
+            padding: 20px;
             text-align: center;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
         }
 
-        /* Responsivitas */
-        @media (max-width: 991px) {
-            .navbar-nav {
-                padding: 15px;
-                background-color: #fff;
-            }
-            .navbar-brand img {
-                height: 50px;
-            }
-            .navbar-nav .nav-link {
-                padding: 10px 15px;
-            }
-            .navbar-nav .nav-link.register-btn {
-                margin: 10px auto;
-                display: block;
-                width: fit-content;
-            }
+        .available-package {
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+            font-weight: 400;
+            background-color: var(--light-gray);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 0 auto;
         }
 
-        @media (max-width: 576px) {
-            .navbar-brand img {
-                height: 40px;
-            }
-            .navbar-nav .nav-link {
-                font-size: 1rem;
-            }
+        .available-package span {
+            font-weight: 600;
+            color: #1F2937;
         }
 
-        /* Animasi Keyframes */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .intro-section .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1F2937;
+            text-align: left;
+            margin: 20px 0;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .intro-section .brand {
+            color: var(--primary-blue);
+            font-weight: 700;
         }
 
-        /* List Container */
         .list-container {
             display: flex;
             justify-content: space-between;
@@ -241,102 +150,199 @@ include_once './app/_dbConnection.php';
             flex-basis: 70%;
         }
 
-        /* Package Styling */
-        .package {
+        .package-container {
+            padding: 20px 0;
+        }
+
+        .package-card {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 30px 0;
-            border-top: 2px solid #ccc;
-        }
-
-        .package:last-child {
-            border-bottom: 2px solid #ccc;
-        }
-
-        .package-img {
-            flex-basis: 57%;
-            max-width: 57%;
-            width: 100%;
-            height: 300px;
-            border-radius: 25px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            object-fit: cover;
+            transition: var(--transition);
+            position: relative;
         }
 
-        .package-img img {
+        .package-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .package-image {
+            flex: 0 0 30%;
+            position: relative;
+        }
+
+        .package-image img {
             width: 100%;
-            height: 100%;
+            height: 220px;
             object-fit: cover;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            cursor: pointer;
         }
 
-        .package-img:hover {
-            transform: scale(1.1);
+        .location-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--secondary-blue);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--discount-red);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         .package-info {
-            flex-basis: 58%;
-            padding: 15px 25px;
-            background: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            color: #555;
-            font-size: 1.1rem;
-            line-height: 1.6;
+            flex: 1;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .package-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            padding-top: 15px;
-            border-top: 1px solid #ddd;
-        }
-
-        .package-price {
-            margin-top: 20px;
+        .package-info h2 {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #4682B4;
-        }
-
-        .package-price h4 {
-            margin: 0;
-        }
-
-        .package-price span {
-            color: #fff;
-            font-size: 1rem;
             font-weight: 600;
-            background: #87CEEB;
-            padding: 4px 8px;
-            border-radius: 5px;
+            color: #1F2937;
+            margin-bottom: 8px;
         }
 
-        .package .btn {
-            padding: 10px 20px;
-            background: #00bfae;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
+        .rating-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rating .stars {
+            color: var(--rating-yellow);
+            font-size: 0.9rem;
+        }
+
+        .rating span {
+            font-size: 0.9rem;
+            color: #1F2937;
             font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .package .btn:hover {
-            background: linear-gradient(135deg, #cce5ff, #6495ed);
+        .rating .review-label {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .deal {
+            background: var(--deal-pink);
+            color: var(--deal-text);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .review-snippet {
+            font-size: 0.85rem;
+            color: #4B5563;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .review-author {
+            font-size: 0.85rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .review-date {
+            font-size: 0.85rem;
+            color: #6B7280;
+            margin-bottom: 8px;
+        }
+
+        .see-more {
+            color: var(--secondary-blue);
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .see-more:hover {
+            text-decoration: underline;
+        }
+
+        .price-section {
+            flex: 0 0 20%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            border-left: 1px solid var(--medium-gray);
+        }
+
+        .price-section .original-price {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            text-decoration: line-through;
+            margin-bottom: 5px;
+        }
+
+        .price-section .discounted-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--discount-red);
+            margin-bottom: 5px;
+        }
+
+        .price-section .price-note {
+            font-size: 0.8rem;
+            color: #6B7280;
+            margin-bottom: 10px;
+        }
+
+        .price-section .check-btn {
+            background: #F97316;
+            color: var(--white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+        }
+
+        .price-section .check-btn:hover {
+            background: #EA580C;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.5);
         }
 
-        /* Sidebar Styling */
         .right-col {
             flex-basis: 25%;
             max-width: 300px;
@@ -345,42 +351,41 @@ include_once './app/_dbConnection.php';
         .sidebar {
             position: sticky;
             top: 20px;
-            border-radius: 12px;
-            padding: 25px;
-            background: #ffffff;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e8eef3;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            background: var(--white);
+            box-shadow: var(--shadow);
             transition: box-shadow 0.3s ease;
         }
 
         .sidebar:hover {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
         }
 
         .sidebar .logo {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .sidebar h2 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 15px;
+            color: #1F2937;
+            margin-bottom: 10px;
             text-align: center;
         }
 
         .sidebar p {
-            font-size: 0.95rem;
-            color: #7f8c8d;
+            font-size: 0.9rem;
+            color: #6B7280;
             line-height: 1.5;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
 
         .sidebar .brand {
-            color: #3498db;
+            color: var(--primary-blue);
             font-weight: 700;
         }
 
@@ -389,82 +394,115 @@ include_once './app/_dbConnection.php';
             position: relative;
             width: 100%;
             margin-bottom: 20px;
+            background: var(--white);
+            border: 1px solid var(--search-border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .search-listing:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .search-listing input {
             width: 100%;
             padding: 12px 45px 12px 15px;
-            border: 1px solid #e8eef3;
-            border-radius: 8px;
-            background: #f9fafb;
+            border: none;
+            background: transparent;
             font-size: 0.95rem;
-            color: #34495e;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            color: #1F2937;
+            transition: background 0.3s ease;
+        }
+
+        .search-listing input::placeholder {
+            color: #9CA3AF;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         .search-listing input:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
             outline: none;
+            background: var(--white);
+        }
+
+        .search-listing input:focus::placeholder {
+            transform: translateX(10px);
+            opacity: 0;
         }
 
         .search-listing button {
             position: absolute;
             top: 50%;
-            right: 5px;
+            right: 10px;
             transform: translateY(-50%);
-            background: #3498db;
+            background: var(--secondary-blue);
             border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 6px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             cursor: pointer;
-            color: #fff;
+            color: var(--white);
             font-size: 1rem;
-            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .search-listing button:hover {
-            background: #2980b9;
+            background: #2563EB;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .search-listing button:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
         }
 
         .search-tips {
-            padding-top: 15px;
-            border-top: 1px solid #e8eef3;
+            padding-top: 20px;
+            border-top: 1px solid var(--medium-gray);
         }
 
         .search-tips h3 {
-            font-size: 1.2rem;
-            color: #2c3e50;
-            margin-bottom: 12px;
+            font-size: 1.15rem;
+            color: #1F2937;
+            margin-bottom: 15px;
             text-align: center;
+            font-weight: 600;
         }
 
         .popular-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
         }
 
         .search-tag {
-            padding: 6px 14px;
-            background: #ecf0f1;
-            color: #34495e;
-            border: none;
-            border-radius: 6px;
+            padding: 8px 16px;
+            background: var(--light-gray);
+            color: #1F2937;
+            border: 1px solid var(--search-border);
+            border-radius: 20px;
             font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
         }
 
         .search-tag:hover {
-            background: #3498db;
-            color: #fff;
+            background: var(--secondary-blue);
+            color: var(--white);
+            border-color: var(--secondary-blue);
+            transform: translateY(-2px);
         }
 
-        /* Pagination Styling */
+        .search-tag:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
         .pagination {
             display: flex;
             justify-content: center;
@@ -472,9 +510,9 @@ include_once './app/_dbConnection.php';
             gap: 10px;
             padding: 20px 0;
             margin: 20px 0;
-            background: #fff;
-            border-top: 1px solid #ddd;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
         }
 
         .pagination .pagination-btns-container {
@@ -484,55 +522,84 @@ include_once './app/_dbConnection.php';
 
         .pagination-btn {
             padding: 8px 12px;
-            background: #f0f0f0;
+            background: var(--light-gray);
             border-radius: 5px;
+            color: #1F2937;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: background 0.3s ease;
         }
 
         .pagination-btn.current {
-            background: #00bfae;
-            color: #fff;
+            background: var(--secondary-blue);
+            color: var(--white);
         }
 
         .pagination-btn:hover {
-            background: #87CEEB;
+            background: #93C5FD;
         }
 
         .pagination-arrow {
             padding: 8px 12px;
-            background: #f0f0f0;
+            background: var(--light-gray);
             border: none;
             border-radius: 5px;
+            color: #1F2937;
             cursor: pointer;
             transition: background 0.3s ease;
         }
 
         .pagination-arrow:disabled {
-            background: #ccc;
+            background: #D1D5DB;
+            color: #9CA3AF;
             cursor: not-allowed;
         }
 
         .pagination-arrow:hover:not(:disabled) {
-            background: #87CEEB;
+            background: #93C5FD;
         }
 
-        /* Responsivitas */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--discount-red);
+        }
+
         @media (max-width: 991px) {
             .navbar-nav {
                 padding: 15px;
-                background-color: #fff;
+                background-color: var(--white);
             }
             .navbar-brand img {
-                height: 50px;
-            }
-            .navbar-nav .nav-link {
-                padding: 10px 15px;
-            }
-            .navbar-nav .nav-link.register-btn {
-                margin: 10px auto;
-                display: block;
-                width: fit-content;
+                height: 40px;
             }
             .list-container {
                 flex-direction: column;
@@ -542,43 +609,86 @@ include_once './app/_dbConnection.php';
                 max-width: 100%;
             }
             .right-col {
-                margin-top: 25px;
+                margin-top: 20px;
             }
             .sidebar {
                 position: relative;
                 top: 0;
             }
+            .package-card {
+                flex-direction: column;
+            }
+            .package-image {
+                flex: 0 0 100%;
+            }
+            .package-image img {
+                height: 250px;
+            }
+            .price-section {
+                flex: 0 0 100%;
+                align-items: center;
+                padding: 15px;
+                border-left: none;
+                border-top: 1px solid var(--medium-gray);
+            }
+            .search-listing {
+                padding: 5px;
+            }
+            .search-listing input {
+                padding: 10px 40px 10px 12px;
+                font-size: 0.9rem;
+            }
+            .search-listing button {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 576px) {
             .navbar-brand img {
-                height: 40px;
+                height: 35px;
             }
-            .navbar-nav .nav-link {
-                font-size: 1rem;
+            .package-info h2 {
+                font-size: 1.3rem;
             }
-            .package-img {
-                flex-basis: 100%;
-                max-width: 70%;
-                margin: 0 auto;
+            .package-image img {
+                height: 200px;
             }
-            .package-info {
-                flex-basis: 100%;
-                text-align: center;
+            .price-section .discounted-price {
+                font-size: 1.2rem;
             }
-            .package-footer {
-                flex-direction: column;
-                align-items: center;
+            .price-section .check-btn {
+                padding: 8px 15px;
+                font-size: 0.85rem;
             }
-            .package .btn {
-                width: 100%;
-                max-width: 200px;
+            .location-badge, .discount-badge {
+                font-size: 0.75rem;
+                padding: 4px 10px;
+            }
+            .deal {
+                font-size: 0.75rem;
+            }
+            .review-snippet, .review-author, .review-date {
+                font-size: 0.8rem;
+            }
+            .search-listing input {
+                padding: 8px 35px 8px 10px;
+                font-size: 0.85rem;
+            }
+            .search-listing button {
+                width: 30px;
+                height: 30px;
+                font-size: 0.85rem;
+            }
+            .search-tag {
+                padding: 6px 12px;
+                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header/Navbar -->
     <header>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -599,14 +709,13 @@ include_once './app/_dbConnection.php';
                         <li class="nav-item">
                             <a class="nav-link" href="./mainpage.html">About JDAR</a>
                         </li>
-                        <?php include "./components/_navBtns.php"; ?>
+                        <?php require_once "./components/_navBtns.php"; ?>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Header Section with Title -->
     <section class="header-section">
         <div class="packages-header">
             <?php
@@ -620,60 +729,6 @@ include_once './app/_dbConnection.php';
                 Total <span id="all-packages-count"><?php echo $allPackages; ?></span> Package(s) Available
             </p>
 
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
-                .available-package {
-                    font-family: 'Inter', sans-serif;
-                    font-size: 1rem;
-                    color: #5e5e5e;
-                    font-weight: 400;
-                    background-color: #ffffff;
-                    padding: 12px 24px;
-                    border-radius: 12px;
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-                    border: 1px solid #e1e1e1;
-                    display: inline-block;
-                    margin: 20px auto;
-                    text-align: center;
-                }
-
-                .available-package span {
-                    font-weight: 600;
-                    color: #333;
-                }
-            </style>
-
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap');
-
-                .intro-section {
-                    background-color: #f5f5f5;
-                    padding: 60px 5% 40px;
-                    border-top: 1px solid #d3cbc4;
-                }
-
-                .intro-section .container {
-                    max-width: 1200px;
-                    margin: 0 auto;
-                }
-
-                .intro-section .section-title {
-                    font-family: 'Inter', sans-serif;
-                    font-size: 2.8rem;
-                    font-weight: 700;
-                    color: #2e2e2e;
-                    text-align: left;
-                    margin-top: 10px;
-                    position: relative;
-                }
-
-                .intro-section .brand {
-                    color: #7f7f7f;
-                    font-weight: 700;
-                }
-            </style>
-
             <section class="intro-section">
                 <div class="container">
                     <h1 class="section-title">
@@ -684,93 +739,95 @@ include_once './app/_dbConnection.php';
         </div>
     </section>
 
-    <!-- Modal for Zoom -->
     <div id="imageModal" class="modal">
-        <span class="close-btn" onclick="closeZoom()">&times;</span>
+        <span class="close-btn" onclick="closeZoom()">×</span>
         <img id="zoomedImage" class="modal-content" src="">
     </div>
 
-    <!-- Main Content -->
     <main class="container">
         <div class="list-container">
-            <!-- Packages Column -->
             <div class="left-col">
                 <section class="package-container">
                     <?php while ($row = mysqli_fetch_assoc($res)): ?>
-                        <article class="package">
-                            <div class="package-img" onclick="zoomImage(this.querySelector('img'))">
-                                <img src="<?php echo htmlspecialchars($row['master_image']); ?>" alt="<?php echo htmlspecialchars($row['package_name']); ?>" loading="lazy">
+                        <?php
+                        $rating = floatval($row['package_rating']);
+                        $reviewCount = rand(100, 1000);
+                        $stars = '';
+                        $fullStars = floor($rating);
+                        $halfStar = ($rating - $fullStars) >= 0.5 ? 1 : 0;
+                        $emptyStars = 5 - $fullStars - $halfStar;
+                        for ($i = 0; $i < $fullStars; $i++) {
+                            $stars .= "<i class='fa-solid fa-star'></i>";
+                        }
+                        if ($halfStar) {
+                            $stars .= "<i class='fa-solid fa-star-half-stroke'></i>";
+                        }
+                        for ($i = 0; $i < $emptyStars; $i++) {
+                            $stars .= "<i class='fa-regular fa-star'></i>";
+                        }
+                        $discountPercentage = isset($row['discount_percentage']) ? floatval($row['discount_percentage']) : 0;
+                        $originalPrice = floatval(str_replace(',', '', $row['package_price']));
+                        $discountedPrice = $discountPercentage > 0 ? $originalPrice * (1 - $discountPercentage / 100) : $originalPrice;
+                        $formattedOriginalPrice = number_format($originalPrice, 0, ',', '.');
+                        $formattedDiscountedPrice = number_format($discountedPrice, 0, ',', '.');
+                        ?>
+                        <article class="package-card">
+                            <div class="package-image">
+                                <img src="<?php echo htmlspecialchars($row['master_image']); ?>" alt="<?php echo htmlspecialchars($row['package_name']); ?>" onclick="zoomImage(this)">
+                                <span class="location-badge"><?php echo htmlspecialchars($row['package_location']); ?></span>
+                                <?php if ($discountPercentage > 0): ?>
+                                    <span class="discount-badge"><?php echo $discountPercentage; ?>% OFF</span>
+                                <?php endif; ?>
                             </div>
                             <div class="package-info">
-                                <div class="package-header">
-                                    <p class="location"><?php echo htmlspecialchars($row['package_location']); ?></p>
-                                    <h3><?php echo htmlspecialchars($row['package_name']); ?></h3>
-                                </div>
-                                <div class="package-features">
-                                    <?php
-                                    $features = [];
-                                    if ($row["is_hotel"]) $features[] = "Hotel";
-                                    if ($row["is_transport"]) $features[] = "Transport";
-                                    if ($row["is_food"]) $features[] = "Food";
-                                    if ($row["is_guide"]) $features[] = "Tour Guide";
-                                    echo implode(" / ", $features);
-                                    ?>
-                                </div>
-                                <div class="package-rating">
-                                    <?php
-                                    $rating = floatval($row['package_rating']);
-                                    for ($i = 1; $i <= 5; $i++) {
-                                        if ($i <= $rating) echo "<i class='fa-solid fa-star'></i>";
-                                        elseif ($i - 0.5 <= $rating) echo "<i class='fa-solid fa-star-half-stroke'></i>";
-                                        else echo "<i class='fa-regular fa-star'></i>";
-                                    }
-                                    ?>
-                                </div>
-                                <p class="package-description"><?php echo htmlspecialchars($row['package_desc']); ?></p>
-                                <div class="tour-dates">
-                                    <div class="date-item">
-                                        <span>Tour Start:</span>
-                                        <h4><?php echo htmlspecialchars($row['package_start']); ?></h4>
+                                <div>
+                                    <h2><?php echo htmlspecialchars($row['package_name']); ?></h2>
+                                    <div class="rating-location">
+                                        <div class="rating">
+                                            <span class="stars"><?php echo $stars; ?></span>
+                                            <span><?php echo number_format($rating, 1); ?> (<?php echo $reviewCount; ?>)</span>
+                                            <span class="review-label ?>"><?php echo $rating >= 4.5 ? 'Superb' : 'Impressive'; ?></span>
+                                        </div>
                                     </div>
-                                    <div class="date-item">
-                                        <span>Tour End:</span>
-                                        <h4><?php echo htmlspecialchars($row['package_end']); ?></h4>
-                                    </div>
+                                    <div class="deal">Hotel Deals</div>
+                                    <div class="deal">Penawaran eksklusif s.d. <?php echo $discountPercentage; ?>% hanya di Aplikasi</div>
+                                    <div class="review-snippet"><?php echo substr(htmlspecialchars($row['package_desc']), 0, 150); ?>... <a href="./package.php?id=<?php echo htmlspecialchars($row['package_id']); ?>" class="see-more">See more</a></div>
+                                    <div class="review-author">JDAR Traveler</div>
+                                    <div class="review-date">From <?php echo htmlspecialchars($row['package_start']); ?></div>
                                 </div>
-                                <div class="package-footer">
-                                    <div class="package-price">
-                                        <h4><?php echo htmlspecialchars($row['package_price']); ?> Rp <span>All Inclusive</span></h4>
-                                    </div>
-                                    <div class="package-action">
-                                        <a href="./package.php?id=<?php echo htmlspecialchars($row['package_id']); ?>" class="btn">View Details</a>
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="price-section">
+                                <?php if ($discountPercentage > 0): ?>
+                                    <div class="original-price">Rp <?php echo $formattedOriginalPrice; ?></div>
+                                <?php endif; ?>
+                                <div class="discounted-price">Rp <?php echo $formattedDiscountedPrice; ?></div>
+                                <div class="price-note">Di luar pajak & biaya</div>
+                                <a href="./package.php?id=<?php echo htmlspecialchars($row['package_id']); ?>" class="check-btn">Pilih</a>
                             </div>
                         </article>
                     <?php endwhile; ?>
                 </section>
             </div>
 
-            <!-- Sidebar Column -->
             <div class="right-col">
                 <aside class="sidebar">
                     <div class="logo">
                         <img src="logo.png" alt="JDAR Logo" style="width: 50px; height: auto;">
                     </div>
-                    <h2>Explore Your Next Journey</h2>
-                    <p>Discover curated travel packages with <span class="brand">JDAR</span>.</p>
-                    <form class="search-listing" id="search-form">
-                        <input type="text" id="sidebar-search-input" name="search" value="<?php echo htmlspecialchars($location); ?>" placeholder="Where to next?" aria-label="Search destination">
-                        <button type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <h2>Plan Your Adventure</h2>
+                    <p>Explore exclusive travel packages with <span class="brand">JDAR</span>.</p>
+                    <form class="search-listing" id="search-form" aria-label="Search travel destinations">
+                        <input type="text" id="sidebar-search-input" name="search" value="<?php echo htmlspecialchars($location); ?>" placeholder="Search destinations..." aria-label="Enter destination city or region">
+                        <button type="submit" id="search-button" aria-label="Search destinations"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                     <div class="search-tips">
-                        <h3>Top Destinations</h3>
+                        <h3>Popular Destinations</h3>
                         <div class="popular-tags">
-                            <button class="search-tag" data-location="Bali">Bali</button>
-                            <button class="search-tag" data-location="Jakarta">Jakarta</button>
-                            <button class="search-tag" data-location="Lombok">Lombok</button>
-                            <button class="search-tag" data-location="Yogyakarta">Yogyakarta</button>
-                            <button class="search-tag" data-location="Jawa Timur">Jawa Timur</button>
+                            <button class="search-tag" data-location="Bali" aria-label="Search Bali packages">Bali</button>
+                            <button class="search-tag" data-location="Jakarta" aria-label="Search Jakarta packages">Jakarta</button>
+                            <button class="search-tag" data-location="Lombok" aria-label="Search Lombok packages">Lombok</button>
+                            <button class="search-tag" data-location="Yogyakarta" aria-label="Search Yogyakarta packages">Yogyakarta</button>
+                            <button class="search-tag" data-location="Jawa Timur" aria-label="Search Jawa Timur packages">Jawa Timur</button>
                         </div>
                     </div>
                 </aside>
@@ -778,7 +835,6 @@ include_once './app/_dbConnection.php';
         </div>
     </main>
 
-    <!-- Pagination -->
     <nav class="pagination" aria-label="Packages pagination">
         <button class="pagination-arrow" id="prev-page" aria-label="Previous page" disabled>
             <i class="fa-solid fa-chevron-left"></i>
@@ -794,17 +850,14 @@ include_once './app/_dbConnection.php';
         </button>
     </nav>
 
-    <!-- Footer -->
-    <?php include "./components/_footer.php"; ?>
+    <?php require_once "./components/_footer.php"; ?>
 
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         $(document).ready(function() {
-            // Navbar scroll effect
             let lastScrollTop = 0;
             const navbar = $('.navbar');
             $(window).scroll(function() {
@@ -817,17 +870,14 @@ include_once './app/_dbConnection.php';
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             });
 
-            // Close navbar on link click in mobile
             $('.navbar-nav .nav-link').on('click', function() {
                 if ($(window).width() <= 991) {
                     $('.navbar-collapse').collapse('hide');
                 }
             });
 
-            // AOS Initialization
             AOS.init({ duration: 800, once: true });
 
-            // Zoom Image Functionality
             window.zoomImage = function(img) {
                 var modal = document.getElementById("imageModal");
                 var zoomed = document.getElementById("zoomedImage");
@@ -839,9 +889,9 @@ include_once './app/_dbConnection.php';
                 document.getElementById("imageModal").style.display = "none";
             }
 
-            // Pagination and Search Logic
             const searchForm = $('#search-form');
             const searchInput = $('#sidebar-search-input');
+            const searchButton = $('#search-button');
             const packageContainer = $('.package-container');
             const paginationBtns = $('.pagination-btn');
             const prevPage = $('#prev-page');
@@ -851,54 +901,75 @@ include_once './app/_dbConnection.php';
             let totalPackages = parseInt(allPackagesCount.text());
             let query = new URLSearchParams(location.search).get('loc') || '';
 
+            const escapeHTML = (str) => {
+                if (typeof str !== 'string') return str;
+                return str.replace(/&/g, '&amp;')
+                          .replace(/</g, '&lt;')
+                          .replace(/>/g, '&gt;')
+                          .replace(/"/g, '&quot;')
+                          .replace(/'/g, '&#039;')
+                          .replace(/`/g, '&#096;');
+            };
+
             const addPackage = (pkg) => {
-                const features = [];
-                if (parseInt(pkg.is_hotel)) features.push('Hotel');
-                if (parseInt(pkg.is_transport)) features.push('Transport');
-                if (parseInt(pkg.is_food)) features.push('Food');
-                if (parseInt(pkg.is_guide)) features.push('Tour Guide');
+                try {
+                    const rating = parseFloat(pkg.package_rating) || 0;
+                    let stars = '';
+                    for (let i = 1; i <= 5; i++) {
+                        stars += i <= rating ? '<i class="fa-solid fa-star"></i>' :
+                                 i - 0.5 <= rating ? '<i class="fa-solid fa-star-half-stroke"></i>' :
+                                 '<i class="fa-regular fa-star"></i>';
+                    }
+                    const reviewCount = Math.floor(Math.random() * 900) + 100;
+                    const discountPercentage = parseFloat(pkg.discount_percentage) || 0;
+                    const priceAsString = typeof pkg.package_price === 'string' ? pkg.package_price : pkg.package_price.toString();
+                    const originalPrice = parseFloat(priceAsString.replace(/,/g, '')) || 0;
+                    const discountedPrice = discountPercentage > 0 ? originalPrice * (1 - discountPercentage / 100) : originalPrice;
+                    const formattedOriginalPrice = originalPrice.toLocaleString('id-ID');
+                    const formattedDiscountedPrice = discountedPrice.toLocaleString('id-ID');
 
-                let stars = '';
-                const rating = parseFloat(pkg.package_rating);
-                for (let i = 1; i <= 5; i++) {
-                    stars += i <= rating ? '<i class="fa-solid fa-star"></i>' :
-                           i - 0.5 <= rating ? '<i class="fa-solid fa-star-half-stroke"></i>' :
-                           '<i class="fa-regular fa-star"></i>';
+                    const safePackageName = escapeHTML(pkg.package_name);
+                    const safePackageLocation = escapeHTML(pkg.package_location);
+                    const safeMasterImage = escapeHTML(pkg.master_image);
+                    const safePackageDesc = escapeHTML(pkg.package_desc);
+                    const safePackageId = escapeHTML(pkg.package_id);
+                    const safePackageStart = escapeHTML(pkg.package_start);
+
+                    packageContainer.append(`
+                        <article class="package-card">
+                            <div class="package-image">
+                                <img src="${safeMasterImage}" alt="${safePackageName}" onclick="zoomImage(this)">
+                                <span class="location-badge">${safePackageLocation}</span>
+                                ${discountPercentage > 0 ? `<span class="discount-badge">${discountPercentage}% OFF</span>` : ''}
+                            </div>
+                            <div class="package-info">
+                                <div>
+                                    <h2>${safePackageName}</h2>
+                                    <div class="rating-location">
+                                        <div class="rating">
+                                            <span class="stars">${stars}</span>
+                                            <span>${rating.toFixed(1)} (${reviewCount})</span>
+                                            <span class="review-label">${rating >= 4.5 ? 'Superb' : 'Impressive'}</span>
+                                        </div>
+                                    </div>
+                                    <div class="deal">Hotel Deals</div>
+                                    <div class="deal">Penawaran eksklusif s.d. ${discountPercentage}% hanya di Aplikasi</div>
+                                    <div class="review-snippet">${safePackageDesc.substring(0, 150)}... <a href="./package.php?id=${safePackageId}" class="see-more">See more</a></div>
+                                    <div class="review-author">JDAR Traveler</div>
+                                    <div class="review-date">From ${safePackageStart}</div>
+                                </div>
+                            </div>
+                            <div class="price-section">
+                                ${discountPercentage > 0 ? `<div class="original-price">Rp ${formattedOriginalPrice}</div>` : ''}
+                                <div class="discounted-price">Rp ${formattedDiscountedPrice}</div>
+                                <div class="price-note">Di luar pajak & biaya</div>
+                                <a href="./package.php?id=${safePackageId}" class="check-btn">Pilih</a>
+                            </div>
+                        </article>
+                    `);
+                } catch (error) {
+                    console.error('Error adding package:', error, pkg);
                 }
-
-                packageContainer.append(`
-                    <article class="package">
-                        <div class="package-img" onclick="zoomImage(this.querySelector('img'))">
-                            <img src="${pkg.master_image}" alt="${pkg.package_name}" loading="lazy">
-                        </div>
-                        <div class="package-info">
-                            <div class="package-header">
-                                <p class="location">${pkg.package_location}</p>
-                                <h3>${pkg.package_name}</h3>
-                            </div>
-                            <div class="package-features">${features.join(' / ')}</div>
-                            <div class="package-rating">${stars}</div>
-                            <p class="package-description">${pkg.package_desc}</p>
-                            <div class="tour-dates">
-                                <div class="date-item">
-                                    <span>Tour Start:</span>
-                                    <h4>${pkg.package_start}</h4>
-                                </div>
-                                <div class="date-item">
-                                    <span>Tour End:</span>
-                                    <h4>${pkg.package_end}</h4>
-                                </div>
-                            </div>
-                            <div class="package-footer">
-                                <div class="package-price">
-                                    <h4>${pkg.package_price} Rp <span>All Inclusive</span></h4>
-                                </div>
-                                <div class="package-action">
-                                    <a href="./package.php?id=${pkg.package_id}" class="btn">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>`);
             };
 
             const fetchPackages = async (query, page) => {
@@ -910,7 +981,7 @@ include_once './app/_dbConnection.php';
                         body: `query=${encodeURIComponent(query)}&start=${start}&end=5`
                     });
                     const data = await response.json();
-                    totalPackages = data[0];
+                    totalPackages = parseInt(data[0]) || 0;
                     allPackagesCount.text(totalPackages);
                     packageContainer.empty();
                     data.slice(1).forEach(addPackage);
@@ -927,10 +998,10 @@ include_once './app/_dbConnection.php';
                     $(this).toggleClass('current', parseInt($(this).data('page')) === page);
                 });
                 prevPage.prop('disabled', page === 1);
-                nextPage.prop('disabled', page === totalPages);
+                nextPage.prop('disabled', page === totalPages || totalPages === 0);
             };
 
-            searchForm.on('submit', (e) => {
+            searchForm.on('submit', function(e) {
                 e.preventDefault();
                 query = searchInput.val().trim();
                 currentPage = 1;
@@ -938,8 +1009,15 @@ include_once './app/_dbConnection.php';
                 history.pushState({}, '', query ? `?loc=${encodeURIComponent(query)}` : './listing.php');
             });
 
-            $('.search-tag').on('click', function() {
-                searchInput.val($(this).data('location'));
+            searchButton.on('click', function(e) {
+                e.preventDefault();
+                searchForm.trigger('submit');
+            });
+
+            $('.search-tag').on('click', function(e) {
+                e.preventDefault();
+                const location = $(this).data('location');
+                searchInput.val(location);
                 searchForm.trigger('submit');
             });
 

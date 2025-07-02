@@ -1,8 +1,11 @@
 <?php
 if (!isset($_SESSION)) {
+    session_start();
 }
+?>
 
-// Jika user sudah login
+<?php
+// If user is logged in
 if (isset($_SESSION["logged_in"])) {
     echo '<li class="nav-item">';
     if (isset($_SESSION['is_admin'])) {
@@ -15,9 +18,9 @@ if (isset($_SESSION["logged_in"])) {
     echo '<a class="nav-link" href="./services/_logout.php" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>';
     echo '</li>';
 } else {
-    // Jika user belum login
+    // If user is not logged in
     echo '<li class="nav-item">';
-    echo '<a class="nav-link btn btn-primary ms-2" href="./registration.php">Register Now</a>';
+    echo '<a class="nav-link register-btn" href="./registration.php">Register Now</a>';
     echo '</li>';
 }
 ?>

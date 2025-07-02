@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
@@ -26,142 +26,197 @@
 
         .footer {
             background-color: #ffffff;
-            color: #333;
-            padding: 0;
+            color: #1a1a1a;
             width: 100%;
+            padding: 60px 0 30px;
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
+            padding: 0 24px;
             display: flex;
-            justify-content: space-between;
-            padding: 30px 20px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            gap: 40px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .footer-content::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
         }
 
         .footer-column {
+            flex: 0 0 auto;
+            min-width: 180px;
             display: flex;
             flex-direction: column;
-            min-width: 200px;
-            margin-bottom: 20px;
         }
 
         .footer-column h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #333;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            letter-spacing: 0.5px;
         }
 
         .footer-column a {
-            color: #666;
+            color: #005555;
             text-decoration: none;
-            margin-bottom: 10px;
             font-size: 14px;
-            transition: color 0.2s;
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
         }
 
         .footer-column a:hover {
-            color: #333;
+            color: #ff6200;
         }
 
         .get-in-touch p {
-            margin-bottom: 15px;
             font-size: 14px;
-            color: #333;
-            max-width: 220px;
-            line-height: 1.4;
+            color: #005555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            max-width: 260px;
         }
 
         .social-icons {
             display: flex;
-            gap: 15px;
-            margin-top: 5px;
+            gap: 16px;
+            margin-top: 10px;
         }
 
         .social-icons a {
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #008080;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: #ff6200;
         }
 
         .social-icons i {
-            font-size: 18px;
-            color: #666;
-            transition: color 0.2s;
-        }
-
-        .social-icons i:hover {
-            color: #333;
+            font-size: 16px;
+            color: #ffffff;
         }
 
         .footer-bottom {
-            text-align: center;
-            padding: 20px 0;
-            font-size: 12px;
-            color: #666;
-            border-top: 1px solid #eaeaea;
-            background-color: #ffffff;
+            max-width: 1280px;
+            margin: 40px auto 0;
+            padding: 20px 24px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #005555;
         }
 
         .footer-links {
-            margin-top: 5px;
+            display: flex;
+            gap: 20px;
         }
 
         .footer-links a {
-            color: #666;
+            color: #005555;
             text-decoration: none;
-            margin: 0 5px;
-            font-size: 12px;
+            font-size: 13px;
+            transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: #333;
+            color: #ff6200;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-content {
+                gap: 30px;
+            }
+
+            .footer-column {
+                min-width: 160px;
+            }
         }
 
         @media (max-width: 768px) {
             .footer-content {
-                flex-direction: column;
-                align-items: flex-start;
+                padding: 0 20px;
+                flex-wrap: nowrap;
             }
 
-            .footer-column {
-                width: 100%;
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                padding: 40px 0 20px;
+            }
+
+            .footer-column h3 {
+                font-size: 16px;
+            }
+
+            .footer-column a,
+            .get-in-touch p {
+                font-size: 13px;
+            }
+
+            .social-icons a {
+                width: 32px;
+                height: 32px;
+            }
+
+            .social-icons i {
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Footer starts here -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-column">
-                <h3>Products</h3>
-                <a href="#">Product</a>
-                <a href="#">Pricing</a>
-                <a href="#">Log in</a>
-                <a href="#">Request access</a>
-                <a href="#">Partnerships</a>
+                <h3>Produk</h3>
+                <a href="#">Produk</a>
+                <a href="#">Harga</a>
+                <a href="#">Masuk</a>
+                <a href="#">Minta Akses</a>
+                <a href="#">Kemitraan</a>
             </div>
             
             <div class="footer-column">
-                <h3>About us</h3>
-                <a href="#">About JDAR Travel</a>
-                <a href="#">Contact us</a>
-                <a href="#">Features</a>
-                <a href="#">Careers</a>
+                <h3>Tentang Kami</h3>
+                <a href="#">Tentang JDAR Travel</a>
+                <a href="#">Hubungi Kami</a>
+                <a href="#">Fitur</a>
+                <a href="#">Karir</a>
             </div>
             
             <div class="footer-column">
-                <h3>Resources</h3>
-                <a href="#">Help center</a>
-                <a href="#">Book a demo</a>
-                <a href="#">Server status</a>
+                <h3>Sumber Daya</h3>
+                <a href="#">Pusat Bantuan</a>
+                <a href="#">Pesan Demo</a>
+                <a href="#">Status Server</a>
                 <a href="#">Blog</a>
             </div>
             
             <div class="footer-column get-in-touch">
-                <h3>Get in touch</h3>
-                <p>Questions or feedback? We'd love to hear from you</p>
+                <h3>Hubungi Kami</h3>
+                <p>Punya pertanyaan atau masukan? Kami ingin mendengar dari Anda</p>
                 <div class="social-icons">
                     <a href="https://www.facebook.com/rahmat.dewa.96780" target="_blank" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
@@ -180,10 +235,10 @@
         </div>
         
         <div class="footer-bottom">
-            <p>© 2024 JDAR Travel. All rights reserved.</p>
+            <p>© 2025 JDAR Travel. Hak cipta dilindungi.</p>
             <div class="footer-links">
-                <a href="#">Terms of Service</a>
-                <a href="#">Privacy Policy</a>
+                <a href="#">Syarat Layanan</a>
+                <a href="#">Kebijakan Privasi</a>
             </div>
         </div>
     </footer>

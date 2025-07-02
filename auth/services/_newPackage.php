@@ -1,5 +1,4 @@
 <?php
-
 include_once("../../app/_dbConnection.php");
 
 if (isset($_POST['package_name']) && isset($_POST['start']) && isset($_POST['end']) && isset($_POST['price']) && isset($_POST['capacity']) && isset($_POST['master-img'])) {
@@ -32,10 +31,12 @@ if (isset($_POST['package_name']) && isset($_POST['start']) && isset($_POST['end
     $master_image = $_POST['master-img'];
     $extra_image_1 = $_POST['ex1'];
     $extra_image_2 = $_POST['ex2'];
+    $discount_percentage = 0; // Default value for discount_percentage
 
     $packagesInstance = new Packages();
 
-    $packagesInstance->createPackage($package_name, $package_desc, $package_start, $package_end, $package_price, $package_location, $is_hotel, $is_transport, $is_food, $is_guide, $package_capacity, $map_loc, $master_image, $extra_image_1, $extra_image_2);
+    $packagesInstance->createPackage($package_name, $package_desc, $package_start, $package_end, $package_price, $discount_percentage, $package_location, $is_hotel, $is_transport, $is_food, $is_guide, $package_capacity, $map_loc, $master_image, $extra_image_1, $extra_image_2);
 
     echo "<script> location.href = '../packages.php' </script>";
 }
+?>

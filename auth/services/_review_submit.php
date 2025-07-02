@@ -5,21 +5,32 @@ if (!isset($_SESSION)) {
 include_once("../../app/_dbConnection.php");
 
 if (isset($_POST['desc']) && isset($_POST['rating']) && isset($_POST['package_id'])) {
-
     $desc = $_POST['desc'];
-    $rating = $_POST['rating'];
-    $package_id = $_POST['package_id'];
+    $rating = floatval($_POST['rating']); // Pastikan rating adalah angka
+    $package_id = intval($_POST['package_id']); // Pastikan package_id adalah integer
+    $user_id = $_SESSION['user_id']; // Ambil user_id dari sesi
+
+    // Validasi input
+    if (empty($desc) || $rating < 1 || $rating > 5 || empty($package_id) || empty($user_id)) {
+        echo "<script>alert('Input tidak valid!'); location.href = '../user_dashboard.php';</script>";
+        exit;
+    }
 
     $testimonialInstance = new Testimonials();
     $packageInstance = new Packages();
-    $package = $packageInstance->getPackage($package_id);
-    $package = mysqli_fetch_assoc($package);
-    $prevRating = $package['package_rating'];
-    if ($prevRating == 0) {
-        $newRating = $rating;
+
+    // Tambahkan testimonial
+    $testimonialResult = $testimonialInstance->addTestimonial($desc, $user_id, $package_id, $rating);
+    
+    // Perbarui rating paket menggunakan metode updateRating
+    $updateResult = $packageInstance->updateRating($user_id, $package_id, $rating, $desc);
+
+    if ($testimonialResult && $updateResult === "200") {
+        echo "<script>alert('Ulasan berhasil dikirim!'); location.href = '../user_dashboard.php';</script>";
+    } else {
+        echo "<script>alert('Gagal mengirim ulasan. Silakan coba lagi.'); location.href = '../user_dashboard.php';</script>";
     }
-    else $newRating = ($prevRating + $rating) / 2;
-    $packageInstance->updateRating($package_id, $newRating);
-    echo $testimonialInstance->addTestimonial($desc, $_SESSION['user_id'], $package_id, $rating);
-    echo "<script> location.href = '../user_dashboard.php' </script>";
+} else {
+    echo "<script>alert('Data tidak lengkap!'); location.href = '../user_dashboard.php';</script>";
 }
+?>
