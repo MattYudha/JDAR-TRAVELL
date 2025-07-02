@@ -1,24 +1,85 @@
-<p align="center">
-  <img src="screenshots/01.png" width="100%" alt="Beranda JDAR Travel">
-  <img src="screenshots/02.png" width="100%" alt="Daftar Paket">
-  <img src="screenshots/03.png" width="100%" alt="Form Pemesanan">
-  <img src="screenshots/04.png" width="100%" alt="Halaman Login">
-  <img src="screenshots/05.png" width="100%" alt="Dashboard Admin">
-  <img src="screenshots/06.png" width="100%" alt="Tabel Pengguna">
-  <img src="screenshots/07.png" width="100%" alt="Laporan Penjualan">
-  <img src="screenshots/08.png" width="100%" alt="Pembayaran Midtrans">
-  <img src="screenshots/09.png" width="100%" alt="Form Ulasan">
-  <img src="screenshots/10.png" width="100%" alt="Find Packagr">
-  <img src="screenshots/11.png" width="100%" alt="Landing Page">
-</p>
-
-
 # 🌍 JDAR Travel
 
-**JDAR Travel** adalah aplikasi web full-stack ✨ yang dibangun dengan **PHP murni** untuk mengelola berbagai paket wisata dan perjalanan.  
-Pengguna dapat **menjelajah 🧭, mencari 🔍, membeli 🛒**, serta menulis ulasan dan menghasilkan laporan PDF 📄.  
-Admin dapat **mengelola pengguna 👥, paket wisata 🧳, penjualan 💰**, dan menghasilkan laporan 🗂️.  
+**JDAR Travel** adalah aplikasi web full-stack ✨ yang dibangun dengan **PHP murni** untuk mengelola berbagai paket wisata dan perjalanan.
+Pengguna dapat **menjelajah 🧭, mencari 🔍, membeli 🛒**, serta menulis ulasan dan menghasilkan laporan PDF 📄.
+Admin dapat **mengelola pengguna 👥, paket wisata 🧳, penjualan 💰**, dan menghasilkan laporan 🗂️.
 Terintegrasi dengan **Midtrans** untuk pemrosesan pembayaran yang **aman 🔐 dan cepat⚡**.
+
+---
+
+## 📸 Tampilan Aplikasi
+
+Berikut adalah beberapa tampilan utama dari aplikasi JDAR Travel:
+
+### Halaman Pengguna
+
+<p align="center">
+  <img src="screenshots/11.png" width="100%" alt="Landing Page">
+  <br>
+  <em>Landing Page</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/01.png" width="100%" alt="Beranda JDAR Travel">
+  <br>
+  <em>Beranda JDAR Travel</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/10.png" width="100%" alt="Pencarian Paket">
+  <br>
+  <em>Pencarian Paket</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/02.png" width="100%" alt="Daftar Paket">
+  <br>
+  <em>Daftar Paket Tersedia</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/03.png" width="100%" alt="Form Pemesanan">
+  <br>
+  <em>Form Pemesanan Paket</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/09.png" width="100%" alt="Form Ulasan">
+  <br>
+  <em>Form Pemberian Ulasan</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/08.png" width="100%" alt="Pembayaran Midtrans">
+  <br>
+  <em>Integrasi Pembayaran Midtrans</em>
+</p>
+
+### Halaman Admin
+
+<p align="center">
+  <img src="screenshots/04.png" width="100%" alt="Halaman Login Admin">
+  <br>
+  <em>Halaman Login Admin</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/05.png" width="100%" alt="Dashboard Admin">
+  <br>
+  <em>Dashboard Admin</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/06.png" width="100%" alt="Tabel Pengguna">
+  <br>
+  <em>Manajemen Data Pengguna</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/07.png" width="100%" alt="Laporan Penjualan">
+  <br>
+  <em>Laporan Penjualan</em>
+</p>
 
 ---
 
@@ -79,78 +140,5 @@ Terintegrasi dengan **Midtrans** untuk pemrosesan pembayaran yang **aman 🔐 da
 
 1. **Clone Repository:**
 ```bash
-git clone https://github.com/rahmatyudi/jdar-travel.git
+git clone [https://github.com/rahmatyudi/jdar-travel.git](https://github.com/rahmatyudi/jdar-travel.git)
 cd jdar-travel
-```
-
-2. **Pasang Dependensi:**
-```bash
-composer install
-```
-
-3. **Setup Database:**
-- Buat database baru `triptip`
-- Import schema dari `app/db.sql`
-- Update konfigurasi di `app/dbConnection.php`
-
-4. **Konfigurasi Midtrans:**
-Buat file `.env` lalu tambahkan:
-```env
-MIDTRANS_SERVER_KEY=server-key-anda
-MIDTRANS_CLIENT_KEY=client-key-anda
-MIDTRANS_IS_PRODUCTION=false
-```
-
-5. **Konfigurasi PHPMailer (Opsional):**
-Edit di `api/register.php` & `success.php`
-```php
-$mail->Username = 'email-anda@gmail.com';
-$mail->Password = 'password-email-anda';
-```
-Pastikan SMTP aktif di email Anda.
-
-6. **Jalankan Aplikasi:**
-```bash
-php -S localhost:8000
-```
-🌐 Buka di browser: [http://localhost:8000](http://localhost:8000)
-
----
-
-## 🧭 Panduan Penggunaan
-
-### Untuk Pengguna
-- 📥 Daftar/Login → `api/register.php`, `api/login.php`
-- 🔍 Cari & jelajahi paket → `searchPackages.php`, `package.php`
-- 🛒 Pesan paket → `order_form.php`
-- 💸 Bayar via Midtrans (VA, QRIS, dll.)
-- 📝 Tulis ulasan → `user_review.php`
-- 📄 Cetak laporan → `sales_pdf.php`
-
-### Untuk Admin
-- 🔐 Login → `admin_login.php`
-- 🧳 Kelola Paket → `new_package.php`, `packageAvailability.php`
-- 👥 Kelola Pengguna → `user_update.php`
-- 📈 Lihat Penjualan & Laporan → `sales_pdf.php`, `generatePDF.php`
-- 🧭 Dashboard → `admin_dashboard.php`
-
----
-
-## 📄 Lisensi
-
-Proyek ini open-source dan bebas digunakan untuk keperluan edukasi atau pengembangan lebih lanjut.
-
----
-
-## 🙌 Kontribusi
-
-Pull request dan feedback sangat diterima!  
-Silakan fork dan kirim PR jika ingin menambahkan fitur atau perbaikan.
-
----
-
-## 👨‍💻 Developer
-
-Dibuat oleh [Rahmat Yudi Burhanudin](https://github.com/rahmatyudi) 💻  
-Email     : dewarahmat12334@gmail.com
-Terima kasih telah menggunakan JDAR Travel! 🎒🌴
