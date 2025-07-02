@@ -9,77 +9,49 @@ Terintegrasi dengan **Midtrans** untuk pemrosesan pembayaran yang **aman 🔐 da
 
 ## 📸 Tampilan Aplikasi
 
-Berikut adalah beberapa tampilan utama dari aplikasi JDAR Travel:
-
-### Halaman Pengguna
+Berikut adalah beberapa tampilan utama dari aplikasi JDAR Travel, disajikan untuk memberikan gambaran komprehensif:
 
 <p align="center">
-  <img src="screenshots/11.png" width="100%" alt="Landing Page">
+  <img src="screenshots/11.png" width="49%" alt="Landing Page">
+  <img src="screenshots/01.png" width="49%" alt="Beranda JDAR Travel">
   <br>
-  <em>Landing Page</em>
+  <em>Landing Page & Beranda Aplikasi</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/01.png" width="100%" alt="Beranda JDAR Travel">
+  <img src="screenshots/10.png" width="49%" alt="Pencarian Paket">
+  <img src="screenshots/02.png" width="49%" alt="Daftar Paket">
   <br>
-  <em>Beranda JDAR Travel</em>
+  <em>Halaman Pencarian & Daftar Paket Tersedia</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/10.png" width="100%" alt="Pencarian Paket">
+  <img src="screenshots/03.png" width="49%" alt="Form Pemesanan">
+  <img src="screenshots/09.png" width="49%" alt="Form Ulasan">
   <br>
-  <em>Pencarian Paket</em>
+  <em>Form Pemesanan Paket & Pemberian Ulasan</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/02.png" width="100%" alt="Daftar Paket">
+  <img src="screenshots/08.png" width="49%" alt="Pembayaran Midtrans">
+  <img src="screenshots/04.png" width="49%" alt="Halaman Login Admin">
   <br>
-  <em>Daftar Paket Tersedia</em>
+  <em>Integrasi Pembayaran Midtrans & Halaman Login Admin</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/03.png" width="100%" alt="Form Pemesanan">
+  <img src="screenshots/05.png" width="49%" alt="Dashboard Admin">
+  <img src="screenshots/06.png" width="49%" alt="Tabel Pengguna">
   <br>
-  <em>Form Pemesanan Paket</em>
+  <em>Dashboard Admin & Manajemen Data Pengguna</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/09.png" width="100%" alt="Form Ulasan">
+  <img src="screenshots/07.png" width="49%" alt="Laporan Penjualan">
   <br>
-  <em>Form Pemberian Ulasan</em>
+  <em>Tampilan Laporan Penjualan (Admin)</em>
 </p>
 
-<p align="center">
-  <img src="screenshots/08.png" width="100%" alt="Pembayaran Midtrans">
-  <br>
-  <em>Integrasi Pembayaran Midtrans</em>
-</p>
-
-### Halaman Admin
-
-<p align="center">
-  <img src="screenshots/04.png" width="100%" alt="Halaman Login Admin">
-  <br>
-  <em>Halaman Login Admin</em>
-</p>
-
-<p align="center">
-  <img src="screenshots/05.png" width="100%" alt="Dashboard Admin">
-  <br>
-  <em>Dashboard Admin</em>
-</p>
-
-<p align="center">
-  <img src="screenshots/06.png" width="100%" alt="Tabel Pengguna">
-  <br>
-  <em>Manajemen Data Pengguna</em>
-</p>
-
-<p align="center">
-  <img src="screenshots/07.png" width="100%" alt="Laporan Penjualan">
-  <br>
-  <em>Laporan Penjualan</em>
-</p>
 
 ---
 
